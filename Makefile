@@ -28,10 +28,8 @@ clean:
 		${RM} ${OBJ}
 		@rm -rf objs
 
-
 fclean: clean
 		@make fclean -C libft
-		@make clean -C minilibx
 		${RM} $(NAME)
 		${RM} $(LIBFT)
 
