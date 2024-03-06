@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/05 12:30:52 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/05 13:31:27 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 void	handle_pid_zero(char **argument, int *pipefd)
 {
 	close(pipefd[0]);
-	dup2(pipefd[1], STDOUT_FILENO);
+	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+	{
+		perror("dup2 failed");
+		exit(EXIT_FAILURE);
+	}
 	close(pipefd[1]);
-	execve("/usr/bin/env", argument, __environ);
+	if (execve("/usr/bin/env", argument, __environ) == -1)
+	{
+		perror("execve failed");
+		exit(EXIT_FAILURE);
+	}
 }
 
 char	*handle_pid(int *pipefd, int fd)
@@ -46,11 +54,25 @@ char	*command_env(char **argument, int fd)
 	char	*all_env;
 	int		pipefd[2];
 
-	pipe(pipefd);
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe failed");
+		exit(EXIT_FAILURE);
+	}
 	pid = fork();
-	if (pid == 0)
+	if (pid == -1)
+	{
+		perror("fork failed");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
 		handle_pid_zero(argument, pipefd);
 	all_env = handle_pid(pipefd, fd);
+	if (all_env == NULL)
+	{
+		perror("handle_pid failed");
+		exit(EXIT_FAILURE);
+	}
 	return (all_env);
 }
 
