@@ -20,10 +20,11 @@ void	mini_clear(void)
 	write(STDOUT_FILENO, clear_screen_ansi, 11);
 }
 
-void	handle_builtin(char **argument, char *prompt, pid_t mini_pid)
+void	handle_builtin(char **argument, char *prompt, pid_t mini_pid, char **envp)
 {
 	char	*output;
 	int		length;
+	int		i;
 
 	if (ft_strncmp(argument[0], "pwd", 3) == 0)
 	{
@@ -51,13 +52,19 @@ void	handle_builtin(char **argument, char *prompt, pid_t mini_pid)
 			printf("%s\n", prompt + 5);
 	}
 	else if (ft_strncmp(argument[0], "env", 3) == 0)
-		output = command_env(argument, 1);
+	{
+		i = 0;
+		while(envp[i])
+		{
+			printf("%s\n", envp[i]);
+			i++;
+		}
+	}	
 	else if (ft_strncmp(argument[0], "exit", 4) == 0)
 		kill(mini_pid, SIGTERM);
-	free(output);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	pid_t				mini_pid;
 	char				*prompt;
@@ -70,14 +77,14 @@ int	main(int argc, char **argv)
 	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
 	if (argc == 1)
 	{
-		while (1)
+		while (42)
 		{
 			// print_env();
 			prompt = readline("minishell> ");
 			arguments = ft_split(prompt, ' ');
 			if (prompt)
 				add_history(prompt);
-			handle_builtin(arguments, prompt, mini_pid);
+			handle_builtin(arguments, prompt, mini_pid, envp);
 			free_matrix(arguments);
 			free(prompt);
 		}
