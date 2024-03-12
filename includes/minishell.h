@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/02 11:20:05 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:13:35 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,8 @@
 #include <term.h>
 #include "../libft/includes/libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char		*command_env(char **argument, int fd);
+char		**store_env(void);
+void		print_env(void);
+void		free_matrix(char **arguments);
+void		free_all(char **arguments, char *prompt);

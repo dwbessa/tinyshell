@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/02 11:22:04 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/06 10:03:39 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,72 +20,65 @@ void	mini_clear(void)
 	write(STDOUT_FILENO, clear_screen_ansi, 11);
 }
 
-void	interpret_prompt(char **argument, char *prompt)
+void	handle_builtin(char **argument, char *prompt, pid_t mini_pid)
 {
-	char	*pwd;
+	char	*output;
 	int		length;
-	int		i;
-	int		y;
-	char	*new_path;
 
-	if (strncmp(argument[0], "pwd", 3) == 0)
+	if (ft_strncmp(argument[0], "pwd", 3) == 0)
 	{
 		length = 1024;
-		pwd = malloc(sizeof(char) * length);
-		getcwd(pwd, length);
-		printf("%s\n", pwd);
-		free(pwd);
+		output = malloc(sizeof(char) * length);
+		getcwd(output, length);
+		printf("%s\n", output);
 	}
-	else if (strncmp(argument[0], "cd", 2) == 0)
+	else if (ft_strncmp(argument[0], "cd", 2) == 0)
 	{
-		i = 0;
-		y = 0;
 		if (!argument[1])
 		{
-			length = 1024;
-			pwd = malloc(sizeof(char) * length);
-			getcwd(pwd, length);
-			while (i < 4)
-			{
-				if (pwd[y] == '/')
-					i++;
-				y++;
-			}
-			new_path = ft_substr(pwd, 0, y);
-			chdir(new_path);
-			free(pwd);
-			free(new_path);
+			printf("Não funcionou, usar o path $HOME no código");
 		}
 		else
 			chdir(argument[1]);
 	}
-	else if (strncmp(argument[0], "echo", 4) == 0)
+	else if (ft_strncmp(argument[0], "echo", 4) == 0)
 	{
 		if (!argument[1])
 			printf("\n");
-		else if (strncmp(argument[1], "-n", 2) == 0)
+		else if (ft_strncmp(argument[1], "-n", 2) == 0)
 			printf("%s", prompt + 8);
 		else
 			printf("%s\n", prompt + 5);
 	}
+	else if (ft_strncmp(argument[0], "env", 3) == 0)
+		output = command_env(argument, 1);
+	else if (ft_strncmp(argument[0], "exit", 4) == 0)
+		kill(mini_pid, SIGTERM);
+	free(output);
 }
 
 int	main(int argc, char **argv)
 {
-	char	*prompt;
-	char	**arguments;
+	pid_t				mini_pid;
+	char				*prompt;
+	char				**arguments;
+	struct sigaction	sa;
 
+	sigemptyset(&sa.sa_mask);
+	mini_pid = getpid();
 	mini_clear();
-	printf("Welcome to %s\n", argv[0]);
+	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
 	if (argc == 1)
 	{
 		while (1)
 		{
+			// print_env();
 			prompt = readline("minishell> ");
 			arguments = ft_split(prompt, ' ');
 			if (prompt)
 				add_history(prompt);
-			interpret_prompt(arguments, prompt);
+			handle_builtin(arguments, prompt, mini_pid);
+			free_matrix(arguments);
 			free(prompt);
 		}
 	}
