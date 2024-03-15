@@ -30,8 +30,17 @@
 #include <term.h>
 #include "../libft/includes/libft.h"
 
+typedef struct s_env
+{
+	char	*command;
+	char	*content;
+	struct s_env	*next;
+}	t_env;
+
 char		*command_env(char **argument, int fd);
 char		**store_env(void);
 void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
+void		handle_builtin(char **arg, char *prompt, pid_t pid, char **envp);
+void		mini_clear(char *argv);

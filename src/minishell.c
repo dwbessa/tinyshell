@@ -12,78 +12,26 @@
 
 #include "minishell.h"
 
-void	mini_clear(void)
-{
-	const char	*clear_screen_ansi;
-
-	clear_screen_ansi = "\e[1;1H\e[2J";
-	write(STDOUT_FILENO, clear_screen_ansi, 11);
-}
-
-void	handle_builtin(char **argument, char *prompt, pid_t mini_pid, char **envp)
-{
-	char	*output;
-	int		length;
-	int		i;
-
-	if (ft_strncmp(argument[0], "pwd", 3) == 0)
-	{
-		length = 1024;
-		output = malloc(sizeof(char) * length);
-		getcwd(output, length);
-		printf("%s\n", output);
-	}
-	else if (ft_strncmp(argument[0], "cd", 2) == 0)
-	{
-		if (!argument[1])
-		{
-			printf("Não funcionou, usar o path $HOME no código");
-		}
-		else
-			chdir(argument[1]);
-	}
-	else if (ft_strncmp(argument[0], "echo", 4) == 0)
-	{
-		if (!argument[1])
-			printf("\n");
-		else if (ft_strncmp(argument[1], "-n", 2) == 0)
-			printf("%s", prompt + 8);
-		else
-			printf("%s\n", prompt + 5);
-	}
-	else if (ft_strncmp(argument[0], "env", 3) == 0)
-	{
-		i = 0;
-		while(envp[i])
-		{
-			printf("%s\n", envp[i]);
-			i++;
-		}
-	}	
-	else if (ft_strncmp(argument[0], "exit", 4) == 0)
-		kill(mini_pid, SIGTERM);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t				mini_pid;
 	char				*prompt;
 	char				**arguments;
-	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
 	mini_pid = getpid();
-	mini_clear();
-	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
+	mini_clear(argv[0]);
 	if (argc == 1)
 	{
 		while (42)
 		{
-			// print_env();
 			prompt = readline("minishell> ");
+			while (!prompt)
+			{
+				free(prompt);
+				prompt = readline("minishell > ");
+			}
 			arguments = ft_split(prompt, ' ');
-			if (prompt)
-				add_history(prompt);
+			add_history(prompt);
 			handle_builtin(arguments, prompt, mini_pid, envp);
 			free_matrix(arguments);
 			free(prompt);

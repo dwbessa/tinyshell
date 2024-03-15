@@ -75,13 +75,3 @@ char	*command_env(char **argument, int fd)
 	}
 	return (all_env);
 }
-
-void	print_env(void)
-{
-	char	*env_lines;
-	char	**args;
-
-	args = (char *[]){"env", NULL};
-	env_lines = command_env(args, -1);
-	printf("%s\n", env_lines);
-}

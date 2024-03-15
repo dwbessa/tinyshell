@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dbessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/05 14:16:46 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/15 17:17:35 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/15 17:17:36 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+void	mini_clear(char *argv)
 {
-	int	i;
+	const char	*clear_screen_ansi;
 
-	i = 0;
-	while (arguments[i] != NULL)
-	{
-		free(arguments[i]);
-		i++;
-	}
-	free(arguments);
-}
-
-void	free_all(char **arguments, char *prompt)
-{
-	free_matrix(arguments);
-	free(prompt);
+	clear_screen_ansi = "\e[1;1H\e[2J";
+	printf("%s", clear_screen_ansi);
+	printf("\033[0;32mWelcome to %s\033[0m\n", &argv[2]);
 }
