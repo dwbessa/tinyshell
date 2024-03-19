@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/05 14:13:35 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/19 00:10:59 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,3 +35,10 @@ char		**store_env(void);
 void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
+
+/*pipe*/
+void	execute(char *argv, char **envp);
+char	*find_path(char *cmd, char **envp);
+void	conflict(void);
+void    exec_pipe(int argc, char **argv, char **envp);
+

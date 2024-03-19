@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/06 10:03:39 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/19 00:10:44 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -57,29 +57,33 @@ void	handle_builtin(char **argument, char *prompt, pid_t mini_pid)
 	free(output);
 }
 
-int	main(int argc, char **argv)
-{
-	pid_t				mini_pid;
-	char				*prompt;
-	char				**arguments;
-	struct sigaction	sa;
+// int	main(int argc, char **argv)
+// {
+// 	pid_t				mini_pid;
+// 	char				*prompt;
+// 	char				**arguments;
+// 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	mini_pid = getpid();
-	mini_clear();
-	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
-	if (argc == 1)
-	{
-		while (1)
-		{
-			// print_env();
-			prompt = readline("minishell> ");
-			arguments = ft_split(prompt, ' ');
-			if (prompt)
-				add_history(prompt);
-			handle_builtin(arguments, prompt, mini_pid);
-			free_matrix(arguments);
-			free(prompt);
-		}
-	}
+// 	sigemptyset(&sa.sa_mask);
+// 	mini_pid = getpid();
+// 	mini_clear();
+// 	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
+// 	if (argc == 1)
+// 	{
+// 		while (1)
+// 		{
+// 			// print_env();
+// 			prompt = readline("minishell> ");
+// 			arguments = ft_split(prompt, ' ');
+// 			if (prompt)
+// 				add_history(prompt);
+// 			handle_builtin(arguments, prompt, mini_pid);
+// 			free_matrix(arguments);
+// 			free(prompt);
+// 		}
+// 	}
+// }
+int main(int argc, char **argv, char **envp)
+{
+	exec_pipe(argc, argv, envp);
 }
