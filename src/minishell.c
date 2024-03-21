@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/19 00:10:44 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:55:41 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -57,33 +57,45 @@ void	handle_builtin(char **argument, char *prompt, pid_t mini_pid)
 	free(output);
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	pid_t				mini_pid;
-// 	char				*prompt;
-// 	char				**arguments;
-// 	struct sigaction	sa;
-
-// 	sigemptyset(&sa.sa_mask);
-// 	mini_pid = getpid();
-// 	mini_clear();
-// 	printf("\033[0;32mWelcome to %s\033[0m\n", argv[0]);
-// 	if (argc == 1)
-// 	{
-// 		while (1)
-// 		{
-// 			// print_env();
-// 			prompt = readline("minishell> ");
-// 			arguments = ft_split(prompt, ' ');
-// 			if (prompt)
-// 				add_history(prompt);
-// 			handle_builtin(arguments, prompt, mini_pid);
-// 			free_matrix(arguments);
-// 			free(prompt);
-// 		}
-// 	}
-// }
-int main(int argc, char **argv, char **envp)
+static char	*get_input(void)
 {
-	exec_pipe(argc, argv, envp);
+	char	*input;
+	char	*trimmed_input;
+
+	input = readline("minishell> ");
+	trimmed_input = ft_strtrim(input, " \t");
+	return (trimmed_input);
 }
+
+void	exec_cmd(char *prompt, pid_t mini_pid)
+{
+	char				**arguments;
+
+	arguments = ft_split(prompt, ' ');
+	handle_builtin(arguments, prompt, mini_pid);
+}
+
+int	main(int argc, char **argv)
+{
+	pid_t				mini_pid;
+	char				*prompt;
+
+	mini_pid = getpid();
+	mini_clear();
+	if (argv && argc == 1)
+	{
+		while (42)
+		{
+			prompt = get_input();
+			add_history(prompt);
+			if(!prompt[0])
+			{
+				//free(prompt);
+				continue ;
+			}
+			/*criar func para checar se o prompt é valido*/
+			exec_cmd(prompt, mini_pid);
+		}
+	}
+}
+
