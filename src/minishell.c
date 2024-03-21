@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/21 16:19:40 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:43:42 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,15 +30,18 @@ static char	*get_input(void)
 	return (trimmed_input);
 }
 
-void	exec_cmd(char *prompt, pid_t mini_pid)
+void	exec_cmd(char *prompt, char **envp, pid_t mini_pid)
 {
 	char				**arguments;
-
+	(void)envp;
 	arguments = ft_split(prompt, ' ');
+	// if (have_pipe(prompt))
+	// 	exec_pipe(5, arguments, envp);
+	// else
 	handle_builtin(arguments, prompt, mini_pid);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	pid_t				mini_pid;
 	char				*prompt;
@@ -57,7 +60,7 @@ int	main(int argc, char **argv)
 				continue ;
 			}
 			/*criar func para checar se o prompt é valido*/
-			exec_cmd(prompt, mini_pid);
+			exec_cmd(prompt, envp, mini_pid);
 		}
 	}
 }

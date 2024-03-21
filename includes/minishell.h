@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/21 16:18:09 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:31:29 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,6 +29,13 @@
 #include <termios.h>
 #include <term.h>
 #include "../libft/includes/libft.h"
+
+typedef struct s_data
+{
+	int     argc;
+	char    **argv;
+	char	**envp;
+}   t_data;
 
 char		*command_env(char **argument, int fd);
 char		**store_env(void);
