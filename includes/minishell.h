@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/21 13:32:19 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:18:09 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -36,9 +36,14 @@ void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
 
-/*pipe*/
+/* bultins */
+void	handle_builtin(char **argument, char *prompt, pid_t mini_pid);
+
+/* pipe */
 void	execute(char *argv, char **envp);
 char	*find_path(char *cmd, char **envp);
 void	conflict(void);
 void    exec_pipe(int argc, char **argv, char **envp);
+int     have_pipe(char *prompt);
+
 
