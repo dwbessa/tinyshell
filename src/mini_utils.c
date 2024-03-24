@@ -6,25 +6,17 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:17:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 12:50:42 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 17:13:00 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	mini_clear(void)
-{
-	const char	*clear_screen_ansi;
-
-	clear_screen_ansi = "\e[1;1H\e[2J";
-	printf("%s", clear_screen_ansi);
-	printf("\033[0;32mWelcome to Minishell\033[0m\n\n");
-}
-
 int	many_char(char *s, char c)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (s[i])
 	{
 		if (s[i] != c)
@@ -35,47 +27,52 @@ int	many_char(char *s, char c)
 	return (i);
 }
 
-char	*shell_name(void)
+char	*get_user(t_list *env, char *output)
 {
-	extern char **environ;
-	char		*output;
-	char		*temp;
-	char		*cwd;
-	int			i;
-	int			j;
-
-	i = 0;
-	output = "\033[1;32m";
-	while (environ[i])
+	while (env)
 	{
-		if (!ft_strncmp(environ[i], "USER=", 5))
-			output = ft_strjoin(output, environ[i] + 5);
-		i++;
-	}
-	output = ft_strjoin_free(output, "@");
-	i = 0;
-	while (environ[i])
-	{
-		if (!ft_strncmp(environ[i], "SESSION_MANAGER=local/", 22))
+		if (!ft_strncmp((char *)(env->content), "USER=", 5))
 		{
-			j = many_char(environ[i] + 22, ':');
-			temp =  ft_substr(environ[i], 22, j);
+			output = ft_strjoin(output, (char *)(env->content + 5));
+			break ;
+		}
+		env = env->next;
+	}
+	return (output);
+}
+
+char	*get_session(t_list *env, char *output)
+{
+	char	*temp;
+	int		j;
+
+	while (env)
+	{
+		if (!ft_strncmp((char *)(env->content), "SESSION_MANAGER=local/", 22))
+		{
+			j = many_char((char *)(env->content + 22), ':');
+			temp = ft_substr((char *)(env->content), 22, j);
 			output = ft_strjoin_free(output, temp);
 			free(temp);
+			break ;
 		}
-		i++;
+		env = env->next;
 	}
-	output = ft_strjoin_free(output, "\033[0m:\033[1;34m");
-	i = 0;
-	while (environ[i])
+	return (output);
+}
+
+char	*get_pwd(t_list *env, char *output)
+{
+	int		j;
+	char	*cwd;
+
+	while (env)
 	{
-		if(!ft_strncmp(environ[i], "HOME=", 5))
+		if (!ft_strncmp((char *)(env->content), "HOME=", 5))
 		{
-			j = ft_strlen(environ[i]) - 5;
-			temp = ft_strdup(environ[i] + 5);
-			i = 0;
+			j = ft_strlen((char *)(env->content)) - 5;
 			cwd = getcwd(NULL, 0);
-			if (!ft_strncmp(cwd, temp, j))
+			if (!ft_strncmp(cwd, (char *)(env->content + 5), j))
 			{
 				output = ft_strjoin_free(output, "~");
 				output = ft_strjoin_free(output, cwd + j);
@@ -84,10 +81,26 @@ char	*shell_name(void)
 				output = ft_strjoin_free(output, cwd);
 			break ;
 		}
-		i++;
+		env = env->next;
 	}
-	output = ft_strjoin_free(output, "\033[0m$ ");
-	free(temp);
 	free(cwd);
+	return (output);
+}
+
+char	*shell_name(t_list *env)
+{
+	t_list		*aux;
+	char		*output;
+
+	aux = env;
+	output = "\033[1;32m";
+	output = get_user(env, output);
+	output = ft_strjoin_free(output, "@");
+	env = aux;
+	output = get_session(env, output);
+	env = aux;
+	output = ft_strjoin_free(output, "\033[0m:\033[1;34m");
+	output = get_pwd(env, output);
+	output = ft_strjoin_free(output, "\033[0m$ ");
 	return (output);
 }

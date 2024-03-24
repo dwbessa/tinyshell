@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:10:42 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 17:10:57 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,18 @@ unsigned int	g_exit_status;
 
 int	main(void)
 {
-	//pid_t		mini_pid;
 	char		*prompt;
 	char		*pwd;
 	char		**arguments;
 	t_list		*env;
 
-	//mini_pid = getpid();
 	mini_clear();
 	arguments = NULL;
 	env = get_env_lst();
 	ms_set_sighandle();
 	while (42)
 	{
-		pwd = shell_name();
+		pwd = shell_name(env);
 		prompt = readline(pwd);
 		if (!prompt)
 		{
@@ -77,4 +75,13 @@ void	ms_sigint_handle(int signal)
 		g_exit_status = 1;
 	}
 	return ;
+}
+
+void	mini_clear(void)
+{
+	const char	*clear_screen_ansi;
+
+	clear_screen_ansi = "\e[1;1H\e[2J";
+	printf("%s", clear_screen_ansi);
+	printf("\033[0;32mWelcome to Minishell\033[0m\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:21:14 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 16:40:53 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@
 #include <term.h>
 #include "../libft/includes/libft.h"
 
-typedef struct s_env
-{
-	char			*command;
-	char			*content;
-	struct s_env	*next;
-}	t_env;
-
-char		*command_env(char **argument, int fd);
-char		**store_env(void);
 void		func_pwd(void);
 void		func_cd(char **argument, t_list *env);
 void		func_echo(char **argument, char *prompt);
@@ -51,5 +42,5 @@ void		handle_builtin(char **arg, char *prompt, t_list *env, char *pwd);
 void		mini_clear(void);
 void		ms_sigint_handle(int signal);
 void		ms_set_sighandle(void);
-char		*shell_name(void);
+char		*shell_name(t_list *env);
 t_list		*get_env_lst(void);
