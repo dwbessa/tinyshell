@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:20:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/01/15 17:35:36 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/23 23:39:07 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 
 //Personal functions
 long			ft_atol(const char *nptr);
+char			*ft_strncat(char *dest, const char *src, size_t nb);
 
 #endif

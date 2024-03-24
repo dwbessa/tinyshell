@@ -1,28 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   func_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:23:51 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/24 10:47:10 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/24 13:35:40 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+t_list	*get_env_lst(void)
 {
-	int	i;
+	extern char	**environ;
+	t_list		*var;
+	t_list		*env;
+	int			i;
 
 	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
+	env = NULL;
+	while (environ[i])
 	{
-		free(arguments[i]);
+		var = ft_lstnew(ft_strdup(environ[i]));
+		if (!var)
+		{
+			ft_lstclear(&var, free);
+			return (NULL);
+		}
+		ft_lstadd_back(&env, var);
 		i++;
 	}
-	free(arguments);
+	return (env);
+}
+
+void	func_env(t_list *env)
+{
+	if (!env)
+		return ;
+	while (env != NULL)
+	{
+		ft_putendl_fd(env->content, 1);
+		env = env->next;
+	}
 }

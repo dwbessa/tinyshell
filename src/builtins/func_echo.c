@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 14:57:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:15:12 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/24 10:45:33 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	func_echo(char **argument, char *prompt)
 {
-	t_list	*aux;
-
-	if (!lst)
-		return ;
-	while ((*lst) != NULL)
-	{
-		aux = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = aux;
-	}
+	if (!argument[1])
+		printf("\n");
+	else if (ft_strncmp(argument[1], "-n", 2) == 0)
+		printf("%s", prompt + 8);
+	else
+		printf("%s\n", prompt + 5);
 }

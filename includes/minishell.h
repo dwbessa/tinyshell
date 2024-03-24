@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/05 14:13:35 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 13:21:14 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,24 @@
 
 typedef struct s_env
 {
-	char	*command;
-	char	*content;
+	char			*command;
+	char			*content;
 	struct s_env	*next;
 }	t_env;
 
 char		*command_env(char **argument, int fd);
 char		**store_env(void);
+void		func_pwd(void);
+void		func_cd(char **argument, t_list *env);
+void		func_echo(char **argument, char *prompt);
+void		func_env(t_list *env);
+void		func_exit(char **arg, char *prompt, char *pwd, t_list *env);
 void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
-void		handle_builtin(char **arg, char *prompt, pid_t pid, char **envp);
-void		mini_clear(char *argv);
+void		handle_builtin(char **arg, char *prompt, t_list *env, char *pwd);
+void		mini_clear(void);
+void		ms_sigint_handle(int signal);
+void		ms_set_sighandle(void);
+char		*shell_name(void);
+t_list		*get_env_lst(void);

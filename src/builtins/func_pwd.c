@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   func_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 14:57:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:15:12 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/24 10:44:40 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/24 13:20:57 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	func_pwd(void)
 {
-	t_list	*aux;
+	char	*output;
 
-	if (!lst)
-		return ;
-	while ((*lst) != NULL)
-	{
-		aux = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = aux;
-	}
+	output = getcwd(NULL, 0);
+	printf("%s\n", output);
+	free(output);
 }
