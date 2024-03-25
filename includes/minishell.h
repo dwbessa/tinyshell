@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 16:40:53 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 19:53:58 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@
 #include "../libft/includes/libft.h"
 
 void		func_pwd(void);
-void		func_cd(char **argument, t_list *env);
+void		func_cd(char **argument, t_list **envp);
 void		func_echo(char **argument, char *prompt);
-void		func_env(t_list *env);
-void		func_exit(char **arg, char *prompt, char *pwd, t_list *env);
+void		func_env(t_list **env);
+void		func_exit(char **arg, char *prompt, t_list **envp, char *pwd);
+void		func_export(char **arg, t_list **env);
 void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
-void		handle_builtin(char **arg, char *prompt, t_list *env, char *pwd);
+void		handle_builtin(char **arg, char *prompt, t_list **env, char *pwd);
 void		mini_clear(void);
 void		ms_sigint_handle(int signal);
 void		ms_set_sighandle(void);

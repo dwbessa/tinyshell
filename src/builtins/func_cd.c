@@ -6,14 +6,17 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:42:56 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:06:11 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 17:37:48 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	func_cd(char **argument, t_list *env)
+void	func_cd(char **argument, t_list **envp)
 {
+	t_list	*env;
+
+	env = *envp;
 	if (!argument[1] || !ft_strncmp(argument[1], "~", 2))
 	{
 		while (env != NULL)

@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:47:10 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:35:40 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 22:39:00 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ t_list	*get_env_lst(void)
 	return (env);
 }
 
-void	func_env(t_list *env)
+void	func_env(t_list **env)
 {
-	if (!env)
+	t_list	*current;
+
+	current = *env;
+	if (!current)
 		return ;
-	while (env != NULL)
+	while (current != NULL)
 	{
-		ft_putendl_fd(env->content, 1);
-		env = env->next;
+		ft_putendl_fd(current->content, 1);
+		current = current->next;
 	}
 }

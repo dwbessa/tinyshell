@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 17:10:57 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 22:34:30 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ unsigned int	g_exit_status;
 int	main(void)
 {
 	char		*prompt;
-	char		*pwd;
 	char		**arguments;
+	char		*pwd;
 	t_list		*env;
 
 	mini_clear();
@@ -29,22 +29,23 @@ int	main(void)
 	{
 		pwd = shell_name(env);
 		prompt = readline(pwd);
-		if (!prompt)
+		if (prompt == NULL || *prompt == EOF)
 		{
 			printf("exit\n");
-			func_exit(arguments, prompt, pwd, env);
+			func_exit(arguments, prompt, &env, pwd);
 		}
 		if (prompt && *prompt)
 		{
 			arguments = ft_split(prompt, ' ');
 			add_history(prompt);
-			handle_builtin(arguments, prompt, env, pwd);
+			handle_builtin(arguments, prompt, &env, pwd);
 			free_matrix(arguments);
 		}
 		free(prompt);
 		free(pwd);
 	}
 	ft_lstclear(&env, free);
+	return (0);
 }
 
 void	ms_set_sighandle(void)

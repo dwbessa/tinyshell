@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:17:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 17:13:00 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/24 19:50:42 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ char	*shell_name(t_list *env)
 	char		*output;
 
 	aux = env;
-	output = "\033[1;32m";
+	output = "\001\033[1;32m\002";
 	output = get_user(env, output);
 	output = ft_strjoin_free(output, "@");
 	env = aux;
 	output = get_session(env, output);
 	env = aux;
-	output = ft_strjoin_free(output, "\033[0m:\033[1;34m");
+	output = ft_strjoin_free(output, "\001\033[0m:\033[1;34m\002");
 	output = get_pwd(env, output);
-	output = ft_strjoin_free(output, "\033[0m$ ");
+	output = ft_strjoin_free(output, "\001\033[0m\002$ ");
 	return (output);
 }
