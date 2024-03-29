@@ -6,36 +6,90 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 23:12:34 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/29 13:51:01 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	func_export(char **arg, t_list **env)
+void	*add_declare(void *content)
+{
+	char	*str_content;
+
+	str_content = (char *)content;
+	str_content = ft_strjoin("declare -x ", str_content);
+	return (str_content);
+}
+
+void	sort_env(t_list *env)
+{
+	t_list	*export_env;
+
+	export_env = ft_lstcopy(env);
+	if (!export_env)
+		return ;
+	export_env = ft_sortlist(export_env, ft_strcmp);
+	export_env = ft_lstmap(export_env, add_declare, free);
+	func_env(&export_env);
+	ft_lstclear(&export_env, free);
+}
+
+int	update_var(char *arg, t_list *env)
+{
+	t_list	*aux;
+	int		j;
+
+	aux = env;
+	while (env)
+	{
+		j = many_char(env->content, '=');
+		if (!ft_strncmp(env->content, arg, j))
+		{
+			free(env->content);
+			env->content = ft_strdup(arg);
+			return (1);
+		}
+		env = env->next;
+	}
+	env = aux;
+	return (0);
+}
+
+void	export_cmd(char **arg, t_list *env)
 {
 	t_list	*node;
-	int		i;
 
-	i = 1;
-	while (arg[i])
+	while (*arg)
 	{
-		if (ft_isdigit(arg[i][0]))
+		if (ft_isdigit(**arg))
 		{
-			printf("minishell: export: `%s`: not a valid identifier\n", arg[i]);
-			return ;
+			printf("minishell: export: `%s`: not a valid identifier\n", *arg);
+			arg++;
+			continue ;
 		}
-		node = ft_lstnew(ft_strdup(arg[i]));
+		if (update_var(*arg, env))
+		{
+			arg++;
+			continue ;
+		}
+		node = ft_lstnew(ft_strdup(*arg));
 		if (!node)
 		{
 			ft_lstclear(&node, free);
 			return ;
 		}
-		ft_lstadd_back(env, node);
-		i++;
+		ft_lstadd_back(&env, node);
+		arg++;
 	}
 }
 
-//export with no options and arguments (arg[1] == null) list all env variables
-//sorted alphabetically
-//export with a KEY that already exists, should update its VALUE
+void	func_export(char **arg, t_list *env)
+{
+	arg++;
+	if (!*arg)
+	{
+		sort_env(env);
+		return ;
+	}
+	export_cmd(arg, env);
+}

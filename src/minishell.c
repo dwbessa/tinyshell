@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 22:34:30 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/29 11:48:10 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ int	main(void)
 	{
 		pwd = shell_name(env);
 		prompt = readline(pwd);
-		if (prompt == NULL || *prompt == EOF)
-		{
-			printf("exit\n");
-			func_exit(arguments, prompt, &env, pwd);
-		}
 		if (prompt && *prompt)
 		{
 			arguments = ft_split(prompt, ' ');
@@ -41,6 +36,9 @@ int	main(void)
 			handle_builtin(arguments, prompt, &env, pwd);
 			free_matrix(arguments);
 		}
+		arguments = NULL;
+		if (prompt == NULL || *prompt == EOF)
+			func_exit(arguments, prompt, &env, pwd);
 		free(prompt);
 		free(pwd);
 	}

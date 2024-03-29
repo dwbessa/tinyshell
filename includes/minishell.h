@@ -6,9 +6,12 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:53:58 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/29 12:46:55 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +38,7 @@ void		func_cd(char **argument, t_list **envp);
 void		func_echo(char **argument, char *prompt);
 void		func_env(t_list **env);
 void		func_exit(char **arg, char *prompt, t_list **envp, char *pwd);
-void		func_export(char **arg, t_list **env);
+void		func_export(char **arg, t_list *env);
 void		print_env(void);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
@@ -45,3 +48,6 @@ void		ms_sigint_handle(int signal);
 void		ms_set_sighandle(void);
 char		*shell_name(t_list *env);
 t_list		*get_env_lst(void);
+int			many_char(char *s, char c);
+
+#endif

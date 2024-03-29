@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:10:01 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:54:35 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/29 11:49:56 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	handle_builtin(char **arg, char *prompt, t_list **env, char *pwd)
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		func_exit(arg, prompt, env, pwd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		func_export(arg, env);
+		func_export(arg, *env);
 }
