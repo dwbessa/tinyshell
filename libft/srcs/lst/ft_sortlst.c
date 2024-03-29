@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_sortlst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 22:39:34 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/29 11:12:42 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/29 10:25:17 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/29 11:57:26 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *))
 {
-	t_list	*new_lst;
-	t_list	*new_elem;
+	char	*swap;
+	t_list	*tmp;
 
-	if (!f || !del)
+	if (!lst)
 		return (NULL);
-	new_lst = NULL;
-	while (lst)
+	tmp = lst;
+	while ((lst)->next != NULL)
 	{
-		new_elem = ft_lstnew(f(lst->content));
-		if (!new_elem)
+		if (((*cmp)((lst)->content, (lst)->next->content)) > 0)
 		{
-			ft_lstclear(&new_lst, del);
-			return (NULL);
+			swap = (lst)->content;
+			(lst)->content = (lst)->next->content;
+			(lst)->next->content = swap;
+			lst = tmp;
 		}
-		ft_lstadd_back(&new_lst, new_elem);
-		lst = lst->next;
+		else
+			lst = (lst)->next;
 	}
-	return (new_lst);
+	lst = tmp;
+	return (lst);
 }

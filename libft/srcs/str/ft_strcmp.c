@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 22:39:34 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/29 11:12:42 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/29 10:30:03 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/29 11:23:42 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_list	*new_lst;
-	t_list	*new_elem;
+	int	i;
 
-	if (!f || !del)
-		return (NULL);
-	new_lst = NULL;
-	while (lst)
-	{
-		new_elem = ft_lstnew(f(lst->content));
-		if (!new_elem)
-		{
-			ft_lstclear(&new_lst, del);
-			return (NULL);
-		}
-		ft_lstadd_back(&new_lst, new_elem);
-		lst = lst->next;
-	}
-	return (new_lst);
+	i = 0;
+	while ((s1[i] == s2[i]) && (s1[i] != '\0' || s2[i] != '\0'))
+		i++;
+	return (s1[i] - s2[i]);
 }
