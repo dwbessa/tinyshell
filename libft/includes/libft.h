@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:20:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/29 12:03:40 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/30 14:58:46 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 long		ft_atol(const char *nptr);
 char		*ft_strncat(char *dest, const char *src, size_t nb);
 int			ft_strcmp(const char *s1, const char *s2);
-t_list		*ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *));
+void		ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *));
 t_list		*ft_lstcopy(t_list *lst);
 
 #endif

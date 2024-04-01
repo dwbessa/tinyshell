@@ -6,19 +6,19 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:25:17 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/29 11:57:26 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/03/30 14:58:56 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *))
+void	ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *))
 {
 	char	*swap;
 	t_list	*tmp;
 
 	if (!lst)
-		return (NULL);
+		return ;
 	tmp = lst;
 	while ((lst)->next != NULL)
 	{
@@ -33,5 +33,4 @@ t_list	*ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *))
 			lst = (lst)->next;
 	}
 	lst = tmp;
-	return (lst);
 }
