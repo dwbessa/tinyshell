@@ -14,7 +14,8 @@
 
 void	func_cd(char **argument, t_list **envp)
 {
-	t_list	*env;
+	t_list				*env;
+	extern unsigned int	g_exit_status;
 
 	env = *envp;
 	if (!argument[1] || !ft_strncmp(argument[1], "~", 2))
@@ -30,5 +31,11 @@ void	func_cd(char **argument, t_list **envp)
 		}
 	}
 	else
-		chdir(argument[1]);
+	{
+		if (chdir(argument[1]) == -1)
+		{
+			g_exit_status = errno;
+			perror("minishell: cd");
+		}
+	}
 }

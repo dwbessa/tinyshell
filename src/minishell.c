@@ -21,10 +21,9 @@ int	main(void)
 	char		*pwd;
 	t_list		*env;
 
-	mini_clear();
 	arguments = NULL;
 	env = get_env_lst();
-	ms_set_sighandle();
+	set_sighandle();
 	while (42)
 	{
 		pwd = shell_name(env);
@@ -46,12 +45,12 @@ int	main(void)
 	return (0);
 }
 
-void	ms_set_sighandle(void)
+void	set_sighandle(void)
 {
 	struct sigaction	sig;
 
 	signal(SIGQUIT, SIG_IGN);
-	sig.sa_handler = ms_sigint_handle;
+	sig.sa_handler = sigint_handle;
 	sigemptyset(&sig.sa_mask);
 	sigaddset(&sig.sa_mask, SIGINT);
 	sig.sa_flags = 0;
@@ -59,7 +58,7 @@ void	ms_set_sighandle(void)
 	return ;
 }
 
-void	ms_sigint_handle(int signal)
+void	sigint_handle(int signal)
 {
 	extern unsigned int	g_exit_status;
 
@@ -76,11 +75,3 @@ void	ms_sigint_handle(int signal)
 	return ;
 }
 
-void	mini_clear(void)
-{
-	const char	*clear_screen_ansi;
-
-	clear_screen_ansi = "\e[1;1H\e[2J";
-	printf("%s", clear_screen_ansi);
-	printf("\033[0;32mWelcome to Minishell\033[0m\n\n");
-}

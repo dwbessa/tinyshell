@@ -14,9 +14,11 @@
 
 void	func_pwd(void)
 {
+	extern unsigned int	g_exit_status;
 	char	*output;
 
 	output = getcwd(NULL, 0);
 	printf("%s\n", output);
+	g_exit_status = 0;
 	free(output);
 }

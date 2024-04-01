@@ -38,6 +38,7 @@ t_list	*get_env_lst(void)
 void	func_env(t_list **env)
 {
 	t_list	*current;
+	extern unsigned int	g_exit_status;
 
 	current = *env;
 	if (!current)
@@ -47,4 +48,5 @@ void	func_env(t_list **env)
 		ft_putendl_fd(current->content, 1);
 		current = current->next;
 	}
+	g_exit_status = 0;
 }

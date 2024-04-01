@@ -87,6 +87,8 @@ void	export_cmd(char **arg, t_list *env)
 
 void	func_export(char **arg, t_list *env)
 {
+	extern unsigned int	g_exit_status;
+
 	arg++;
 	if (!*arg)
 	{
@@ -94,4 +96,5 @@ void	func_export(char **arg, t_list *env)
 		return ;
 	}
 	export_cmd(arg, env);
+	g_exit_status = 0;
 }

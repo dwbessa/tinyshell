@@ -40,12 +40,16 @@ void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 
 void	func_unset(char **arg, t_list **env)
 {
+	extern unsigned int	g_exit_status;
 	t_list	*prev;
 	t_list	*curr;
 
 	arg++;
 	if (!*arg)
+	{
+		g_exit_status = 0;
 		return ;
+	}
 	while (*arg)
 	{
 		prev = NULL;
@@ -53,4 +57,5 @@ void	func_unset(char **arg, t_list **env)
 		unsetting_env(prev, curr, arg, env);
 		arg++;
 	}
+	g_exit_status = 0;
 }

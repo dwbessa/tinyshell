@@ -14,10 +14,13 @@
 
 void	func_exit(char **arg, char *prompt, t_list **envp, char *pwd)
 {
+	extern unsigned int	g_exit_status;
+
 	printf("exit\n");
 	free_matrix(arg);
 	free(prompt);
 	free(pwd);
 	ft_lstclear(envp, free);
+	g_exit_status = 0;
 	exit(EXIT_SUCCESS);
 }
