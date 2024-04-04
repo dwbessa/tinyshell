@@ -6,26 +6,30 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:10:01 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/30 14:31:24 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:34:33 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_builtin(char **arg, char *prompt, t_list **env, char *pwd)
+int	is_builtin(char **arg, char *prompt, t_list **env, char *pwd)
 {
+	int	builtin;
+
+	builtin = 0;
 	if (!ft_strncmp(arg[0], "pwd", 4))
-		func_pwd();
+		builtin = func_pwd();
 	else if (!ft_strncmp(arg[0], "cd", 3))
-		func_cd(arg, env);
+		builtin = func_cd(arg, env);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		func_echo(arg, prompt);
+		builtin = func_echo(arg, prompt);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		func_env(env);
+		builtin = func_env(env);
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		func_exit(arg, prompt, env, pwd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		func_export(arg, *env);
+		builtin = func_export(arg, *env);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		func_unset(arg, env);
+		builtin = func_unset(arg, env);
+	return (builtin);
 }

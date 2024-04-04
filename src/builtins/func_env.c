@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:47:10 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/03 10:32:28 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:36:32 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ t_list	*get_env_lst(void)
 	return (env);
 }
 
-void	func_env(t_list **env)
+int	func_env(t_list **env)
 {
 	t_list				*current;
 	extern unsigned int	g_exit_status;
 
 	current = *env;
 	if (!current)
-		return ;
+		return (1);
 	while (current != NULL)
 	{
 		ft_putendl_fd(current->content, 1);
 		current = current->next;
 	}
 	g_exit_status = 0;
+	return (1);
 }

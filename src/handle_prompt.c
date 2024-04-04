@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_echo.c                                        :+:      :+:    :+:   */
+/*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:28:33 by dbessa           ###   ########.fr       */
+/*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
+/*   Updated: 2024/04/04 10:49:21 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	func_echo(char **argument, char *prompt)
+void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 {
-	extern unsigned int	g_exit_status;
-
-	if (!argument[1])
-		printf("\n");
-	else if (ft_strncmp(argument[1], "-n", 2) == 0)
-		printf("%s", prompt + 8);
-	else
-		printf("%s\n", prompt + 5);
-	g_exit_status = 0;
-	return (1);
+	arg = ft_split(prompt, ' ');
+	add_history(prompt);
+	if (is_builtin(arg, prompt, env, pwd))
+	{
+		free_matrix(arg);
+		return ;
+	}
 }

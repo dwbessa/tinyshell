@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:54:42 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/03 10:32:48 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:36:16 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 	}
 }
 
-void	func_unset(char **arg, t_list **env)
+int	func_unset(char **arg, t_list **env)
 {
 	extern unsigned int	g_exit_status;
 	t_list				*prev;
@@ -48,7 +48,7 @@ void	func_unset(char **arg, t_list **env)
 	if (!*arg)
 	{
 		g_exit_status = 0;
-		return ;
+		return (1);
 	}
 	while (*arg)
 	{
@@ -58,4 +58,5 @@ void	func_unset(char **arg, t_list **env)
 		arg++;
 	}
 	g_exit_status = 0;
+	return (1);
 }

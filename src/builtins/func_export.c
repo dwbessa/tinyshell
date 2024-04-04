@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/30 14:55:30 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:36:47 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	export_cmd(char **arg, t_list *env)
 	}
 }
 
-void	func_export(char **arg, t_list *env)
+int	func_export(char **arg, t_list *env)
 {
 	extern unsigned int	g_exit_status;
 
@@ -93,8 +93,9 @@ void	func_export(char **arg, t_list *env)
 	if (!*arg)
 	{
 		sort_env(env);
-		return ;
+		return (1);
 	}
 	export_cmd(arg, env);
 	g_exit_status = 0;
+	return (1);
 }
