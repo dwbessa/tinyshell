@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:44:40 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 13:20:57 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/03 10:31:31 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	func_pwd(void)
 {
 	extern unsigned int	g_exit_status;
-	char	*output;
+	char				*output;
 
 	output = getcwd(NULL, 0);
 	printf("%s\n", output);

@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:47:10 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 22:39:00 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/03 10:32:28 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list	*get_env_lst(void)
 
 void	func_env(t_list **env)
 {
-	t_list	*current;
+	t_list				*current;
 	extern unsigned int	g_exit_status;
 
 	current = *env;

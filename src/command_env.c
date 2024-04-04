@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/05 13:31:27 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/03 10:33:10 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,3 @@ char	*command_env(char **argument, int fd)
 	}
 	return (all_env);
 }
-

@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:54:42 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/30 15:32:27 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/03 10:32:48 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 {
-	t_list	*next;
-	char	*content;
-	int		len;
+	t_list		*next;
+	char		*content;
+	int			len;
 
 	while (curr)
 	{
@@ -41,8 +41,8 @@ void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 void	func_unset(char **arg, t_list **env)
 {
 	extern unsigned int	g_exit_status;
-	t_list	*prev;
-	t_list	*curr;
+	t_list				*prev;
+	t_list				*curr;
 
 	arg++;
 	if (!*arg)
