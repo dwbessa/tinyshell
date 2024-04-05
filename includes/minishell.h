@@ -33,7 +33,7 @@
 # include <term.h>
 # include "../libft/includes/libft.h"
 
-int			command_env(void);
+int			command_clear(void);
 int			many_char(char *s, char c);
 int			is_builtin(char **arg, char *prompt, t_list **env, char *pwd);
 int			func_pwd(void);
