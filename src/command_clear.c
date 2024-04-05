@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "minishell.h"
 
-int	command_env(void)
+int	command_clear(void)
 {
 	pid_t	pid;
 	int		status;
