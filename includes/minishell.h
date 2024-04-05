@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:45:51 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 17:20:56 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <term.h>
 # include "../libft/includes/libft.h"
 
+int			command_env(void);
 int			many_char(char *s, char c);
 int			is_builtin(char **arg, char *prompt, t_list **env, char *pwd);
 int			func_pwd(void);

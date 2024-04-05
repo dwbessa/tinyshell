@@ -6,72 +6,32 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/03 10:33:10 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:34:31 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell.h"
 
-void	handle_pid_zero(char **argument, int *pipefd)
-{
-	close(pipefd[0]);
-	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-	{
-		perror("dup2 failed");
-		exit(EXIT_FAILURE);
-	}
-	close(pipefd[1]);
-	if (execve("/usr/bin/env", argument, __environ) == -1)
-	{
-		perror("execve failed");
-		exit(EXIT_FAILURE);
-	}
-}
-
-char	*handle_pid(int *pipefd, int fd)
-{
-	char	*line;
-	char	*buffer;
-
-	close(pipefd[1]);
-	line = get_next_line(pipefd[0]);
-	buffer = ft_strdup(line);
-	while (line)
-	{
-		ft_putstr_fd(line, fd);
-		buffer = ft_strjoin(buffer, line);
-		free(line);
-		line = get_next_line(pipefd[0]);
-	}
-	free(line);
-	close(pipefd[0]);
-	return (buffer);
-}
-
-char	*command_env(char **argument, int fd)
+int	command_env(void)
 {
 	pid_t	pid;
-	char	*all_env;
-	int		pipefd[2];
+	int		status;
 
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe failed");
-		exit(EXIT_FAILURE);
-	}
 	pid = fork();
-	if (pid == -1)
+	if (pid < 0)
 	{
 		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-		handle_pid_zero(argument, pipefd);
-	all_env = handle_pid(pipefd, fd);
-	if (all_env == NULL)
 	{
-		perror("handle_pid failed");
+		char *argv[] = {"/usr/bin/clear", NULL};
+		execve(argv[0], argv, __environ);
+		perror("clear failed");
 		exit(EXIT_FAILURE);
 	}
-	return (all_env);
+	else
+		waitpid(pid, &status, 0);
+	return (1);
 }

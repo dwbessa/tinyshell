@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:36:47 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/04 11:02:09 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	update_var(char *arg, t_list *env)
 
 void	export_cmd(char **arg, t_list *env)
 {
-	t_list	*node;
+	t_list				*node;
+	extern unsigned int	g_exit_status;
 
 	while (*arg)
 	{
@@ -67,6 +68,7 @@ void	export_cmd(char **arg, t_list *env)
 		{
 			printf("minishell: export: `%s`: not a valid identifier\n", *arg);
 			arg++;
+			g_exit_status = 1;
 			continue ;
 		}
 		if (update_var(*arg, env))
