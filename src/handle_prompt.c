@@ -22,5 +22,5 @@ void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 		return ;
 	}
 	else if (!ft_strncmp(arg[0], "clear", 6))
-		command_env();
+		command_clear();
 }
