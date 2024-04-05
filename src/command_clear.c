@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/05 13:44:40 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/05 15:46:18 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**use_path(char **arg, t_list **envp)
 			{
 				path = ft_strjoin(*all_path, "/");
 				part_path = ft_strjoin(path, arg[0]);
-				if (access(path, F_OK))
+				if (access(part_path, F_OK) == 0)
 				{
 					arg[0] = ft_strdup(part_path);
 					return (arg);
@@ -63,18 +63,13 @@ int	command_clear(char **arg, t_list **env)
 	}
 	else if (pid == 0)
 	{
-		char *argv[] = {"/usr/bin/clear", NULL};
-		execve(argv[0], argv, __environ);
-		perror("clear failed");
-		exit(EXIT_FAILURE);
+		if (execve(arg2[0], arg2, __environ) == -1)
+		{
+			perror("failed");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 		waitpid(pid, &status, 0);
-	int i = 0;
-	while (arg2[i])
-	{
-		printf("%s\n", arg2[i]);
-		i++;
-	}
 	return (1);
 }
