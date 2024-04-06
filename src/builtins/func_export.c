@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 11:02:09 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:21:33 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,32 @@ int	update_var(char *arg, t_list *env)
 	return (0);
 }
 
-void	export_cmd(char **arg, t_list *env)
+int	export_cmd(char **arg, t_list *env)
 {
 	t_list				*node;
 	extern unsigned int	g_exit_status;
 
+	g_exit_status = 0;
 	while (*arg)
 	{
 		if (ft_isdigit(**arg))
 		{
 			printf("minishell: export: `%s`: not a valid identifier\n", *arg);
-			arg++;
 			g_exit_status = 1;
-			continue ;
 		}
-		if (update_var(*arg, env))
+		else if (!update_var(*arg, env))
 		{
-			arg++;
-			continue ;
+			node = ft_lstnew(ft_strdup(*arg));
+			if (!node)
+			{
+				ft_lstclear(&node, free);
+				return (g_exit_status);
+			}
+			ft_lstadd_back(&env, node);
 		}
-		node = ft_lstnew(ft_strdup(*arg));
-		if (!node)
-		{
-			ft_lstclear(&node, free);
-			return ;
-		}
-		ft_lstadd_back(&env, node);
 		arg++;
 	}
+	return (g_exit_status);
 }
 
 int	func_export(char **arg, t_list *env)
@@ -97,7 +95,6 @@ int	func_export(char **arg, t_list *env)
 		sort_env(env);
 		return (1);
 	}
-	export_cmd(arg, env);
-	g_exit_status = 0;
+	g_exit_status = export_cmd(arg, env);
 	return (1);
 }

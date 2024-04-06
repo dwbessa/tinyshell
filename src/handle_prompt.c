@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 15:25:03 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:51:28 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 {
-	extern unsigned int	g_exit_status;
+	char	**new_arg;
 
 	arg = ft_split(prompt, ' ');
 	add_history(prompt);
-	if (is_builtin(arg, prompt, env, pwd))
+	new_arg = expand_prompt(arg, env);
+	if (is_builtin(new_arg, prompt, env, pwd))
 	{
-		free_matrix(arg);
+		free_matrix(new_arg);
 		return ;
 	}
-	else if (!ft_strncmp(arg[0], "$?", 3))
-		printf("%d: command not found\n", g_exit_status);
-	else if (exec_command(arg, env))
+	else if (exec_command(new_arg, env))
 	{
-		free_matrix(arg);
+		free_matrix(new_arg);
 		return ;
 	}
 }

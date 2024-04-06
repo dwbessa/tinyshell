@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:07:13 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 17:23:13 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	pid_zero(char **arg, char **new_env)
 		if (errno == ENOENT)
 			printf("minishell: command not found: %s\n", arg[0]);
 		else
-			printf("failed: %s\n", strerror(errno));
+			printf("%s: %s\n", arg[0], strerror(errno));
 		exit(127);
 	}
 	else

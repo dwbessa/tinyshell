@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 12:39:22 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:27:33 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(void)
 		prompt = readline(pwd);
 		if (prompt && *prompt)
 			handle_prompt(prompt, arguments, pwd, &env);
-		arguments = NULL;
 		if (prompt == NULL || *prompt == EOF)
 			func_exit(arguments, prompt, &env, pwd);
 		free(prompt);

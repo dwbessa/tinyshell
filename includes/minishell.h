@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 12:04:54 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:56:32 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			many_char(char *s, char c);
 int			is_builtin(char **arg, char *prompt, t_list **env, char *pwd);
 int			func_pwd(void);
 int			func_cd(char **argument, t_list **envp);
-int			func_echo(char **argument, char *prompt);
+int			func_echo(char **argument);
 int			func_env(t_list **env);
 int			func_export(char **arg, t_list *env);
 int			func_unset(char **arg, t_list **env);
@@ -53,6 +53,7 @@ void		sigint_handle(int signal);
 void		set_sighandle(void);
 
 char		*shell_name(t_list *env);
+char		**expand_prompt(char **arg, t_list **env);
 
 t_list		*get_env_lst(void);
 

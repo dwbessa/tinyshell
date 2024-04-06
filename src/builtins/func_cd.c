@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:42:56 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:28:16 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 17:03:50 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	func_cd(char **argument, t_list **envp)
 	extern unsigned int	g_exit_status;
 
 	env = *envp;
-	if (!argument[1] || !ft_strncmp(argument[1], "~", 2))
+	if (!argument[1])
 	{
 		while (env != NULL)
 		{
