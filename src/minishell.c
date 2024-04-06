@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:45:29 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 12:39:22 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	sigint_handle(int signal)
 			write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 1);
 		rl_on_new_line();
-		g_exit_status = 1;
+		g_exit_status = 130;
 	}
 	return ;
 }
