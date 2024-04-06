@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_clear.c                                    :+:      :+:    :+:   */
+/*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/05 15:46:18 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/05 21:25:11 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,25 @@ char	**use_path(char **arg, t_list **envp)
 	char	*path;
 	char	*part_path;
 	t_list	*env;
+	int		i;
 
+	i = 0;
 	env = *envp;
 	while (env)
 	{
-		if(!ft_strncmp(env->content, "PATH=", 5))
+		if (!ft_strncmp(env->content, "PATH=", 5))
 		{
 			all_path = ft_split(env->content + 5, ':');
-			while (all_path)
+			while (all_path[i])
 			{
-				path = ft_strjoin(*all_path, "/");
+				path = ft_strjoin(all_path[i], "/");
 				part_path = ft_strjoin(path, arg[0]);
 				if (access(part_path, F_OK) == 0)
 				{
 					arg[0] = ft_strdup(part_path);
 					return (arg);
 				}
-				all_path++;
+				i++;
 			}
 			break ;
 		}
@@ -65,7 +67,10 @@ int	command_clear(char **arg, t_list **env)
 	{
 		if (execve(arg2[0], arg2, __environ) == -1)
 		{
-			perror("failed");
+			if (errno == ENOENT)
+				printf("minishell: command not found: %s\n", arg2[0]);
+			else
+				printf("failed: %s\n", strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 	}

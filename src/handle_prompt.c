@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/05 13:07:27 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/05 21:24:01 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 		free_matrix(arg);
 		return ;
 	}
-
 }
