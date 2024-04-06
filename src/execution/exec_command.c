@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 15:43:22 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:07:13 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**env_to_matrix(t_list **env)
 	return (new_env);
 }
 
-void	transform_arg(char *arg, t_list *env)
+char	*transform_arg(char *arg, t_list *env)
 {
 	char	**all_path;
 	char	*path;
@@ -55,12 +55,13 @@ void	transform_arg(char *arg, t_list *env)
 			arg = ft_strdup(path);
 			free(path);
 			free_matrix(all_path);
-			return ;
+			return (arg);
 		}
 		free(path);
 		i++;
 	}
 	free_matrix(all_path);
+	return (arg);
 }
 
 char	*use_path(char *arg, t_list **envp)
@@ -72,12 +73,26 @@ char	*use_path(char *arg, t_list **envp)
 	{
 		if (!ft_strncmp(env->content, "PATH=", 5))
 		{
-			transform_arg(arg, env);
+			arg = transform_arg(arg, env);
 			break ;
 		}
 		env = env->next;
 	}
 	return (arg);
+}
+
+void	pid_zero(char **arg, char **new_env)
+{
+	if (execve(arg[0], arg, new_env) == -1)
+	{
+		if (errno == ENOENT)
+			printf("minishell: command not found: %s\n", arg[0]);
+		else
+			printf("failed: %s\n", strerror(errno));
+		exit(127);
+	}
+	else
+		exit(EXIT_SUCCESS);
 }
 
 int	exec_command(char **arg, t_list **env)
@@ -97,18 +112,7 @@ int	exec_command(char **arg, t_list **env)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-	{
-		if (execve(arg[0], arg, new_env) == -1)
-		{
-			if (errno == ENOENT)
-				printf("minishell: command not found: %s\n", arg[0]);
-			else
-				printf("failed: %s\n", strerror(errno));
-			exit(127);
-		}
-		else
-			exit(EXIT_SUCCESS);
-	}
+		pid_zero(arg, new_env);
 	else
 		waitpid(pid, &status, 0);
 	free_matrix(new_env);
