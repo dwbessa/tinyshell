@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:51:28 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/08 18:43:07 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@ void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 	arg = ft_split(prompt, ' ');
 	add_history(prompt);
 	new_arg = expand_prompt(arg, env);
-	if (is_builtin(new_arg, prompt, env, pwd))
-	{
-		free_matrix(new_arg);
-		return ;
-	}
-	else if (exec_command(new_arg, env))
-	{
-		free_matrix(new_arg);
-		return ;
-	}
+	if (!is_builtin(new_arg, prompt, env, pwd))
+		exec_command(new_arg, env);
+	free_matrix(new_arg);
 }
