@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dbessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2023/08/02 16:59:33 by dbessa            #+#    #+#             */
+/*   Updated: 2023/08/02 17:21:50 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdio.h>
 
-#include "minishell.h"
-
-void	free_matrix(char **arguments)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	int	i;
 
 	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
+	while (src[i] != '\0')
 	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
+		dest[i] = src[i];
 		i++;
 	}
-	free(arguments);
+	dest[i] = '\0';
+	return (dest);
 }

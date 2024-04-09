@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_lstcopy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/29 12:01:59 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/30 15:20:52 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_matrix(char **arguments)
+t_list	*ft_lstcopy(t_list *lst)
 {
-	int	i;
+	t_list	*new_lst;
+	t_list	*new_node;
 
-	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
+	new_lst = NULL;
+	while (lst)
 	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
-		i++;
+		new_node = ft_lstnew(ft_strdup(lst->content));
+		if (!new_node)
+		{
+			ft_lstclear(&new_lst, free);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_lst, new_node);
+		lst = lst->next;
 	}
-	free(arguments);
+	return (new_lst);
 }

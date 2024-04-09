@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_sortlst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/29 10:25:17 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/30 14:58:56 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_matrix(char **arguments)
+void	ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *))
 {
-	int	i;
+	char	*swap;
+	t_list	*tmp;
 
-	i = 0;
-	if (!arguments)
+	if (!lst)
 		return ;
-	while (arguments[i] != NULL)
+	tmp = lst;
+	while ((lst)->next != NULL)
 	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
-		i++;
+		if (((*cmp)((lst)->content, (lst)->next->content)) > 0)
+		{
+			swap = (lst)->content;
+			(lst)->content = (lst)->next->content;
+			(lst)->next->content = swap;
+			lst = tmp;
+		}
+		else
+			lst = (lst)->next;
 	}
-	free(arguments);
+	lst = tmp;
 }

@@ -1,67 +1,70 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/21 16:43:42 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:27:33 by dbessa           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	mini_clear(void)
+unsigned int	g_exit_status;
+
+int	main(void)
 {
-	const char	*clear_screen_ansi;
+	char		*prompt;
+	char		**arguments;
+	char		*pwd;
+	t_list		*env;
 
-	clear_screen_ansi = "\e[1;1H\e[2J";
-	write(STDOUT_FILENO, clear_screen_ansi, 11);
-}
-
-static char	*get_input(void)
-{
-	char	*input;
-	char	*trimmed_input;
-
-	input = readline("minishell> ");
-	trimmed_input = ft_strtrim(input, " \t");
-	return (trimmed_input);
-}
-
-void	exec_cmd(char *prompt, char **envp, pid_t mini_pid)
-{
-	char				**arguments;
-	(void)envp;
-	arguments = ft_split(prompt, ' ');
-	// if (have_pipe(prompt))
-	// 	exec_pipe(5, arguments, envp);
-	// else
-	handle_builtin(arguments, prompt, mini_pid);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	pid_t				mini_pid;
-	char				*prompt;
-
-	mini_pid = getpid();
-	mini_clear();
-	if (argv && argc == 1)
+	arguments = NULL;
+	env = get_env_lst();
+	set_sighandle();
+	while (42)
 	{
-		while (42)
-		{
-			prompt = get_input();
-			add_history(prompt);
-			if(!prompt[0])
-			{
-				free(prompt);
-				continue ;
-			}
-			/*criar func para checar se o prompt é valido*/
-			exec_cmd(prompt, envp, mini_pid);
-		}
+		pwd = shell_name(env);
+		prompt = readline(pwd);
+		if (prompt && *prompt)
+			handle_prompt(prompt, arguments, pwd, &env);
+		if (prompt == NULL || *prompt == EOF)
+			func_exit(arguments, prompt, &env, pwd);
+		free(prompt);
+		free(pwd);
 	}
+	ft_lstclear(&env, free);
+	return (0);
 }
 
+void	set_sighandle(void)
+{
+	struct sigaction	sig;
+
+	signal(SIGQUIT, SIG_IGN);
+	sig.sa_handler = sigint_handle;
+	sigemptyset(&sig.sa_mask);
+	sigaddset(&sig.sa_mask, SIGINT);
+	sig.sa_flags = 0;
+	sigaction(SIGINT, &sig, NULL);
+	return ;
+}
+
+void	sigint_handle(int signal)
+{
+	extern unsigned int	g_exit_status;
+
+	if (signal == SIGINT)
+	{
+		if (RL_ISSTATE(RL_STATE_READCMD))
+			ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		else
+			write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		g_exit_status = 130;
+	}
+	return ;
+}

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   func_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/24 10:44:40 by dbessa            #+#    #+#             */
+/*   Updated: 2024/04/06 12:46:50 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+int	func_pwd(void)
 {
-	int	i;
+	char				*output;
 
-	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
-	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
-		i++;
-	}
-	free(arguments);
+	output = getcwd(NULL, 0);
+	printf("%s\n", output);
+	free(output);
+	return (1);
 }
