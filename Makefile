@@ -1,6 +1,6 @@
 NAME		= minishell
 LIBFT		= libft/libft.a
-SRC 		= $(wildcard src/*.c)
+SRC 		= $(shell find src -name '*.c')
 OBJ 		= ${patsubst src/%.c, objs/%.o, $(SRC)}
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g
@@ -17,6 +17,7 @@ objs:
 		@mkdir -p objs
 
 $(OBJ): objs/%.o: src/%.c | objs
+		@mkdir -p $(dir $@)
 		$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)

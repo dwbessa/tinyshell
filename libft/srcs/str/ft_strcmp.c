@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/29 10:30:03 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/29 11:23:42 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_matrix(char **arguments)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
 	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
-	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
+	while ((s1[i] == s2[i]) && (s1[i] != '\0' || s2[i] != '\0'))
 		i++;
-	}
-	free(arguments);
+	return (s1[i] - s2[i]);
 }

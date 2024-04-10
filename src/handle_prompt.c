@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
+/*   Updated: 2024/04/08 18:43:07 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
 {
-	int	i;
+	char	**new_arg;
 
-	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
-	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
-		i++;
-	}
-	free(arguments);
+	arg = ft_split(prompt, ' ');
+	add_history(prompt);
+	new_arg = expand_prompt(arg, env);
+	if (!is_builtin(new_arg, prompt, env, pwd))
+		exec_command(new_arg, env);
+	free_matrix(new_arg);
 }

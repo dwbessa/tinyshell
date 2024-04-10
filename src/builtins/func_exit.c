@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   func_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/24 10:57:03 by dbessa            #+#    #+#             */
+/*   Updated: 2024/04/06 12:56:37 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+void	func_exit(char **arg, char *prompt, t_list **envp, char *pwd)
 {
-	int	i;
+	extern unsigned int	g_exit_status;
 
-	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
-	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
-		i++;
-	}
-	free(arguments);
+	printf("minishell: exit\n");
+	free_matrix(arg);
+	free(prompt);
+	free(pwd);
+	ft_lstclear(envp, free);
+	g_exit_status = 0;
+	exit(EXIT_SUCCESS);
 }

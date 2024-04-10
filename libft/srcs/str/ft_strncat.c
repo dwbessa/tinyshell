@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/03/24 19:26:16 by dbessa           ###   ########.fr       */
+/*   Created: 2024/03/23 23:37:05 by dbessa            #+#    #+#             */
+/*   Updated: 2024/03/29 11:23:53 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_matrix(char **arguments)
+char	*ft_strncat(char *dest, const char *src, size_t nb)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
-	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
+	while (dest[i] != '\0')
 		i++;
+	j = 0;
+	while (j < nb && src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
 	}
-	free(arguments);
+	dest[i + j] = '\0';
+	return (dest);
 }
