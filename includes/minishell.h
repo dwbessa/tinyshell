@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:56:32 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:30:54 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,44 @@
 # include <term.h>
 # include "../libft/includes/libft.h"
 
-int			exec_command(char **arg, t_list **env);
+typedef struct s_data
+{
+	int		pid;
+
+	int		std_in;
+	int		std_out;
+
+	t_list	*env;
+	
+	char	**envp;
+	char	**cmd;
+	char	**arg;
+	char	**mul_cmds;
+
+	char	*pwd;
+	char	*raw_cmd;
+	char	*cleaned_cmd;
+	char	*infile;
+	char	*outfile;
+
+	t_list	*in_files;
+	t_list	*out_files;
+	int		nbr_of_cmds;
+}	t_data;
+
+int			exec_command(t_data *data);
 int			many_char(char *s, char c);
-int			is_builtin(char **arg, char *prompt, t_list **env, char *pwd);
+int			is_builtin(t_data *data);
 int			func_pwd(void);
-int			func_cd(char **argument, t_list **envp);
+int			func_cd(char **argument, t_list *env);
 int			func_echo(char **argument);
-int			func_env(t_list **env);
+int			func_env(t_list *env);
 int			func_export(char **arg, t_list *env);
 int			func_unset(char **arg, t_list **env);
 
-void		func_exit(char **arg, char *prompt, t_list **envp, char *pwd);
+void		func_exit(t_data *data);
 void		print_env(void);
-void		handle_prompt(char *prompt, char **arg, char *pwd, t_list **env);
+void		handle_prompt(t_data *data);
 void		free_matrix(char **arguments);
 void		free_all(char **arguments, char *prompt);
 void		mini_clear(void);
@@ -53,7 +78,7 @@ void		sigint_handle(int signal);
 void		set_sighandle(void);
 
 char		*shell_name(t_list *env);
-char		**expand_prompt(char **arg, t_list **env);
+char		**expand_prompt(char **arg, t_list *env);
 
 t_list		*get_env_lst(void);
 

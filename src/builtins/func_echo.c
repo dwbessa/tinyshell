@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:59:54 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:34:50 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	func_echo(char **argument)
 		{
 			printf("%s", argument[i]);
 			if (argument[i + 1] != NULL)
-				write(1, " ", 1);
+				printf(" ");
 			i++;
 		}
 	}

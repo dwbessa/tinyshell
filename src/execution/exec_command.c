@@ -6,29 +6,27 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 17:23:13 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:17:09 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**env_to_matrix(t_list **env)
+char	**env_to_matrix(t_list *env)
 {
 	char	**new_env;
-	t_list	*aux;
 	int		len;
 	int		i;
 
 	i = 0;
-	aux = *env;
-	len = ft_lstsize(aux);
+	len = ft_lstsize(env);
 	new_env = malloc(sizeof(char *) * (len + 1));
 	if (!new_env)
 		return (NULL);
-	while (aux)
+	while (env)
 	{
-		new_env[i] = ft_strdup(aux->content);
-		aux = aux->next;
+		new_env[i] = ft_strdup(env->content);
+		env = env->next;
 		i++;
 	}
 	new_env[i] = NULL;
@@ -64,11 +62,8 @@ char	*transform_arg(char *arg, t_list *env)
 	return (arg);
 }
 
-char	*use_path(char *arg, t_list **envp)
+char	*use_path(char *arg, t_list *env)
 {
-	t_list	*env;
-
-	env = *envp;
 	while (env)
 	{
 		if (!ft_strncmp(env->content, "PATH=", 5))
@@ -95,27 +90,25 @@ void	pid_zero(char **arg, char **new_env)
 		exit(EXIT_SUCCESS);
 }
 
-int	exec_command(char **arg, t_list **env)
+int	exec_command(t_data *data)
 {
-	pid_t				pid;
 	int					status;
 	extern unsigned int	g_exit_status;
-	char				**new_env;
 
-	if (ft_strncmp("./", arg[0], 2))
-		arg[0] = use_path(arg[0], env);
-	pid = fork();
-	new_env = env_to_matrix(env);
-	if (pid < 0)
+	if (ft_strncmp("./", data->arg[0], 2))
+		data->arg[0] = use_path(data->arg[0], data->env);
+	data->pid = fork();
+	data->envp = env_to_matrix(data->env);
+	if (data->pid < 0)
 	{
 		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
-		pid_zero(arg, new_env);
+	else if (data->pid == 0)
+		pid_zero(data->arg, data->envp);
 	else
-		waitpid(pid, &status, 0);
-	free_matrix(new_env);
+		waitpid(data->pid, &status, 0);
+	free_matrix(data->envp);
 	g_exit_status = WEXITSTATUS(status);
 	return (1);
 }

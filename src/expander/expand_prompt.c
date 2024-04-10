@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:26:12 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 17:58:26 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:19:22 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*handle_tilde(char *arg, t_list *env)
 	return (arg);
 }
 
-char	**expand_prompt(char **arg, t_list **env)
+char	**expand_prompt(char **arg, t_list *env)
 {
 	int					i;
 	extern unsigned int	g_exit_status;
@@ -68,9 +68,9 @@ char	**expand_prompt(char **arg, t_list **env)
 		if (!ft_strncmp(arg[i], "$?", 3))
 			arg[i] = handle_dollar_question(arg[i], g_exit_status);
 		else if (!ft_strncmp(arg[i], "$", 1))
-			arg[i] = handle_dollar(arg[i], *env);
+			arg[i] = handle_dollar(arg[i], env);
 		else if (!ft_strncmp(arg[i], "~", 1))
-			arg[i] = handle_tilde(arg[i], *env);
+			arg[i] = handle_tilde(arg[i], env);
 		i++;
 	}
 	return (arg);
