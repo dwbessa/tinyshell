@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:56:32 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 12:36:44 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -56,5 +56,11 @@ char		*shell_name(t_list *env);
 char		**expand_prompt(char **arg, t_list **env);
 
 t_list		*get_env_lst(void);
+
+/*syntax errors*/
+int	syntax_error(char *prompt);
+int	check_valid_quotes(char *str);
+int	check_pipe_syntax(char *prompt);
+int	check_redir_syntax(char *prompt);
 
 #endif

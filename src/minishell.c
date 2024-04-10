@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:27:33 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 12:38:19 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -28,6 +28,8 @@ int	main(void)
 	{
 		pwd = shell_name(env);
 		prompt = readline(pwd);
+		if (syntax_error(prompt))
+			continue;
 		if (prompt && *prompt)
 			handle_prompt(prompt, arguments, pwd, &env);
 		if (prompt == NULL || *prompt == EOF)
