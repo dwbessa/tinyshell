@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 12:40:39 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:56:28 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,7 @@ int	main(void)
 		pwd = shell_name(env);
 		prompt = readline(pwd);
 		if (syntax_error(prompt))
-			continue;
+			continue ;
 		if (prompt && *prompt)
 			handle_prompt(prompt, arguments, pwd, &env);
 		if (prompt == NULL || *prompt == EOF)
