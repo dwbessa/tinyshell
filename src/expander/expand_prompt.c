@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-char	*handle_dollar_question(char *arg, unsigned int g_exit_status)
+static char	*handle_dollar_question(char *arg, unsigned int g_exit_status)
 {
 	free(arg);
 	return (ft_itoa(g_exit_status));
 }
 
-char	*handle_dollar(char *arg, t_list *env)
+static char	*handle_dollar(char *arg, t_list *env)
 {
 	t_list	*aux;
 	int		len;
@@ -37,7 +37,7 @@ char	*handle_dollar(char *arg, t_list *env)
 	return (arg);
 }
 
-char	*handle_tilde(char *arg, t_list *env)
+static char	*handle_tilde(char *arg, t_list *env)
 {
 	t_list	*aux;
 	char	*temp;

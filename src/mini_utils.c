@@ -27,7 +27,7 @@ int	many_char(char *s, char c)
 	return (i);
 }
 
-char	*get_user(t_list *env, char *output)
+static char	*get_user(t_list *env, char *output)
 {
 	while (env)
 	{
@@ -41,7 +41,7 @@ char	*get_user(t_list *env, char *output)
 	return (output);
 }
 
-char	*get_session(t_list *env, char *output)
+static char	*get_session(t_list *env, char *output)
 {
 	char	*temp;
 	int		j;
@@ -61,7 +61,7 @@ char	*get_session(t_list *env, char *output)
 	return (output);
 }
 
-char	*get_pwd(t_list *env, char *output)
+static char	*get_pwd(t_list *env, char *output)
 {
 	int		j;
 	char	*cwd;

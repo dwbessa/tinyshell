@@ -18,7 +18,9 @@ void	free_matrix(char **arguments)
 
 	i = 0;
 	if (!arguments)
+	{
 		return ;
+	}
 	while (arguments[i] != NULL)
 	{
 		if (!arguments[i])

@@ -33,7 +33,7 @@ char	**env_to_matrix(t_list *env)
 	return (new_env);
 }
 
-char	*transform_arg(char *arg, t_list *env)
+static char	*transform_arg(char *arg, t_list *env)
 {
 	char	**all_path;
 	char	*path;
@@ -62,7 +62,7 @@ char	*transform_arg(char *arg, t_list *env)
 	return (arg);
 }
 
-char	*use_path(char *arg, t_list *env)
+static char	*use_path(char *arg, t_list *env)
 {
 	while (env)
 	{
@@ -76,7 +76,7 @@ char	*use_path(char *arg, t_list *env)
 	return (arg);
 }
 
-void	pid_zero(char **arg, char **new_env)
+static void	pid_zero(char **arg, char **new_env)
 {
 	if (execve(arg[0], arg, new_env) == -1)
 	{

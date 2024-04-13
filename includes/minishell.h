@@ -36,9 +36,9 @@
 typedef struct s_data
 {
 	int		pid;
-
 	int		std_in;
 	int		std_out;
+	int		nbr_of_cmds;
 
 	t_list	*env;
 	
@@ -55,7 +55,6 @@ typedef struct s_data
 
 	t_list	*in_files;
 	t_list	*out_files;
-	int		nbr_of_cmds;
 }	t_data;
 
 int			exec_command(t_data *data);

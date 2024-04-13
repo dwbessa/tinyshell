@@ -19,6 +19,7 @@ int	main(void)
 	t_data	data;
 
 	data.env = get_env_lst();
+	data.arg = NULL;
 	set_sighandle();
 	while (42)
 	{
