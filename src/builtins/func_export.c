@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:21:33 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:33:41 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sort_env(t_list *env)
 	ft_sortlist(export_env, ft_strcmp);
 	export_lst = ft_lstmap(export_env, add_declare, free);
 	ft_lstclear(&export_env, free);
-	func_env(&export_lst);
+	func_env(export_lst);
 	ft_lstclear(&export_lst, free);
 }
 

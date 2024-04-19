@@ -6,20 +6,20 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/08 18:43:07 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:18:17 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_prompt(char *prompt, char **arg, char *pwd, t_list **env)
+void	handle_prompt(t_data *data)
 {
-	char	**new_arg;
+	char	**split_arg;
 
-	arg = ft_split(prompt, ' ');
-	add_history(prompt);
-	new_arg = expand_prompt(arg, env);
-	if (!is_builtin(new_arg, prompt, env, pwd))
-		exec_command(new_arg, env);
-	free_matrix(new_arg);
+	split_arg = ft_split(data->raw_cmd, ' ');
+	add_history(data->raw_cmd);
+	data->arg = expand_prompt(split_arg, data->env);
+	if (!is_builtin(data))
+		exec_command(data);
+	free_matrix(data->arg);
 }
