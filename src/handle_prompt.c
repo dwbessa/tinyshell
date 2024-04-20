@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:18:17 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/20 01:44:50 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 void	handle_prompt(t_data *data)
 {
 	char	**split_arg;
-
+	
+	data->nbr_of_cmds = count_commands(data->raw_cmd);
 	split_arg = ft_split(data->raw_cmd, ' ');
 	add_history(data->raw_cmd);
 	data->arg = expand_prompt(split_arg, data->env);
-	if (!is_builtin(data))
-		exec_command(data);
+	if (data->nbr_of_cmds == 1)
+	{
+		//ft_init_data_one_cmd(data);
+		one_command(data);
+	}
+	else if (data->nbr_of_cmds > 1)
+	{
+		init_data_multiple_cmds(data);
+		multiple_commands(data);
+	}
 	free_matrix(data->arg);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:30:54 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/04/20 01:38:10 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 typedef struct s_data
 {
 	int		pid;
+	int status;
 
 	int		std_in;
 	int		std_out;
@@ -46,6 +47,7 @@ typedef struct s_data
 	char	**cmd;
 	char	**arg;
 	char	**mul_cmds;
+	int 	pipefd[2];
 
 	char	*pwd;
 	char	*raw_cmd;
@@ -81,5 +83,15 @@ char		*shell_name(t_list *env);
 char		**expand_prompt(char **arg, t_list *env);
 
 t_list		*get_env_lst(void);
+
+/* Parses funcs */
+
+int	count_commands(char *raw_command);
+int	multiple_commands(t_data *data);
+char	**separate_cmds(t_data *data);
+void	init_data_multiple_cmds(t_data *data);
+void	exec_multiple(t_data *data, char *raw_cmd);
+char	*transform_arg(char *arg, t_list *env);
+
 
 #endif
