@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 13:00:19 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 17:00:32 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ typedef struct s_word
 
 typedef struct s_data
 {
-	t_list	*env; //env_lst
-	char	**envp;//could be out of the struct
-	char	**arg;
-	char	*pwd;
-	pid_t	pid;
-	char	*raw_cmd; //could be out of the struct too
+	t_list			*env;
+	char			**envp;
+	char			**arg;
+	char			*pwd;
+	pid_t			pid;
+	char			*raw_cmd;
 	struct s_word	*prompt;
 }	t_data;
 
@@ -98,7 +98,7 @@ void			free_all(char **arguments, char *prompt);
 void			mini_clear(void);
 void			sigint_handle(int signal);
 void			set_sighandle(void);
-void			quote_error();
+void			quote_error(void);
 
 char			*shell_name(t_list *env);
 char			**expand_prompt(char **arg, t_list *env);
