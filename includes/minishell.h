@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 18:35:43 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 18:48:07 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
+int				quote_number(t_data *data);
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
@@ -86,7 +87,6 @@ int				func_echo(t_word *prompt);
 int				func_env(t_list *env);
 int				func_export(t_word *prompt, t_list *env);
 int				func_unset(t_word *prompt, t_list **env);
-int				quote_number(t_data *data);
 
 void			func_exit(t_data *data);
 void			print_env(void);
