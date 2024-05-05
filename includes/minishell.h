@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/21 17:18:04 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:00:19 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef struct s_data
 	char	**envp;//could be out of the struct
 	char	**arg;
 	char	*pwd;
-	int		pid;
+	pid_t	pid;
 	char	*raw_cmd; //could be out of the struct too
+	struct s_word	*prompt;
 }	t_data;
 
 enum e_token
@@ -87,6 +88,7 @@ int				func_echo(char **argument);
 int				func_env(t_list *env);
 int				func_export(char **arg, t_list *env);
 int				func_unset(char **arg, t_list **env);
+int				quote_number(t_data *data);
 
 void			func_exit(t_data *data);
 void			print_env(void);
@@ -96,6 +98,7 @@ void			free_all(char **arguments, char *prompt);
 void			mini_clear(void);
 void			sigint_handle(int signal);
 void			set_sighandle(void);
+void			quote_error();
 
 char			*shell_name(t_list *env);
 char			**expand_prompt(char **arg, t_list *env);
@@ -104,8 +107,15 @@ t_list			*get_env_lst(void);
 
 t_word			*tokenizer(t_data *data);
 unsigned int	give_token(char *word, int last_flag);
-void			print_word(t_word *prompt);
+void			print_word(t_word **prompt);
 void			free_prompt(t_word *prompt);
-t_word			*ms_lstnew(char *word);
+t_word			*ms_lstnew(void *word);
+void			ms_lstadd_back(t_word **lst, t_word *new);
+t_list			*ms_create_env_lst(void);
+t_word			*ms_create_word_lst(char *line, t_list *env_lst);
+int				get_word_len(char *line);
+int				ms_ismeta(char *c);
+int				ms_find_next_quotes(char *line);
+void			tokenize_prompt(t_word **prompt);
 
 #endif

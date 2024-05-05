@@ -1,43 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   quote_number.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:06:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 08:29:49 by dwbessa          ###   ########.fr       */
+/*   Created: 2024/05/05 09:05:16 by dwbessa           #+#    #+#             */
+/*   Updated: 2024/05/05 11:02:45 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_matrix(char **arguments)
+int	quote_number(t_data *data)
 {
 	int	i;
+	int	single_quotes = 0;
+	int	double_quotes = 0;
 
 	i = 0;
-	if (!arguments)
-		return ;
-	while (arguments[i] != NULL)
+	while (data->raw_cmd[i])
 	{
-		if (!arguments[i])
-			return ;
-		free(arguments[i]);
+		if (data->raw_cmd[i] == 39)
+			single_quotes++;
+		else if (data->raw_cmd[i] == 34)
+			double_quotes++;
 		i++;
 	}
-	free(arguments);
+	if (double_quotes == 0 && single_quotes == 0)
+		return (1);
+	else if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
+		return (0);
+	return (1);
 }
 
-void	free_prompt(t_word *prompt)
+void	quote_error()
 {
-	t_word	*tmp;
-
-	while (prompt != NULL)
-	{
-		tmp = prompt;
-		prompt = prompt->next;
-		free(tmp->word);
-		free(tmp);
-	}
+	printf("minishell: error: even number of quotes\n");
 }

@@ -6,53 +6,42 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/21 17:17:42 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:02:27 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 void	handle_prompt(t_data *data)
 {
 	char	**split_arg;
-	t_word	*prompt;
 
-	split_arg = ft_split(data->raw_cmd, ' ');
 	add_history(data->raw_cmd);
+	if (!quote_number(data))
+		return (quote_error());
+	split_arg = ft_split(data->raw_cmd, ' ');
 	data->arg = expand_prompt(split_arg, data->env);
-	prompt = tokenizer(data);
+	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	tokenize_prompt(&data->prompt);
 	if (!is_builtin(data))
 		exec_command(data);
-	print_word(prompt);
+	print_word(&data->prompt);
 	free_matrix(data->arg);
-	free_prompt(prompt);
+	free_prompt(data->prompt);
 }
 
-t_word	*tokenizer(t_data *data)
+void	tokenize_prompt(t_word	**prompt)
 {
-	t_word	*prompt;
-	int		last_flag;
-	int		i;
+	t_word	*token = (*prompt)->head;
+	int	last_flag = 0;
 
-	prompt = ms_lstnew(ft_strdup(*data->arg));
-	prompt->head = prompt;
-	last_flag = 0;
-	i = 0;
-	while (data->arg[i])
+	while (token)
 	{
-		prompt->flag = give_token(prompt->word, last_flag);
-		last_flag = prompt->flag;
-		i++;
-		if (data->arg[i])
-		{
-			prompt->next = ms_lstnew(ft_strdup(data->arg[i]));
-			prompt->next->head = prompt->head;
-			prompt = prompt->next;
-		}
+		token->flag = give_token(token->word, last_flag);
+		last_flag = token->flag;
+		token = token->next;
 	}
-	prompt->next = NULL;
-	prompt = prompt->head;
-	return (prompt);
 }
 
 unsigned int	give_token(char *word, int last_flag)
@@ -75,39 +64,14 @@ unsigned int	give_token(char *word, int last_flag)
 	return (MS_WORD);
 }
 
-void	print_word(t_word *prompt)
+void	print_word(t_word **prompt)
 {
 	t_word	*print;
 
-	print = prompt->head;
+	print = *prompt;
 	while (print != NULL)
 	{
 		printf("WORD = %s\nTOKEN = %d\n", print->word, print->flag);
 		print = print->next;
 	}
-}
-
-void	free_prompt(t_word *prompt)
-{
-	t_word	*tmp;
-
-	while (prompt != NULL)
-	{
-		tmp = prompt;
-		prompt = prompt->next;
-		free(tmp->word);
-		free(tmp);
-	}
-}
-
-t_word	*ms_lstnew(char *word)
-{
-	t_word	*new;
-
-	new = (t_word *)malloc(sizeof(t_word));
-	if (!new)
-		return (NULL);
-	new->word = word;
-	new->next = NULL;
-	return (new);
 }
