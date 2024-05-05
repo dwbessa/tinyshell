@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/21 17:18:20 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 16:56:14 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(void)
 			func_exit(&data);
 		if (data.raw_cmd && *data.raw_cmd)
 			handle_prompt(&data);
-
 		free(data.raw_cmd);
 		free(data.pwd);
 	}

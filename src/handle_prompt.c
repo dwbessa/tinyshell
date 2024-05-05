@@ -6,12 +6,11 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 13:02:27 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 16:57:09 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	handle_prompt(t_data *data)
 {
@@ -33,9 +32,10 @@ void	handle_prompt(t_data *data)
 
 void	tokenize_prompt(t_word	**prompt)
 {
-	t_word	*token = (*prompt)->head;
-	int	last_flag = 0;
+	t_word	*token;
+	int		last_flag;
 
+	token = (*prompt)->head;
 	while (token)
 	{
 		token->flag = give_token(token->word, last_flag);
