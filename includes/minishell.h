@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 17:55:03 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 18:35:43 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ typedef struct s_data
 {
 	t_list			*env;
 	char			**envp;
-	char			**arg;
 	char			*pwd;
-	pid_t			pid;
 	char			*raw_cmd;
 	struct s_word	*prompt;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 17:36:19 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 18:30:04 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,14 @@
 
 void	handle_prompt(t_data *data)
 {
-	char	**split_arg;
-
 	add_history(data->raw_cmd);
 	if (!quote_number(data))
 		return (quote_error());
-	split_arg = ft_split(data->raw_cmd, ' ');
-	data->arg = expand_prompt(split_arg, data->env);
 	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
 	tokenize_prompt(&data->prompt);
 	if (!is_builtin(data))
 		exec_command(data);
 	print_word(&data->prompt);
-	free_matrix(data->arg);
 	free_prompt(data->prompt);
 }
 

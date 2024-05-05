@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:17:09 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 18:33:22 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**transform_list(t_word *prompt)
+{
+	int		i;
+	t_word	*aux;
+	char	**matrix;
+
+	i = 0;
+	aux = prompt->head;
+	while (prompt)
+	{
+		i++;
+		prompt = prompt->next;
+	}
+	prompt = aux->head;
+	matrix = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (prompt)
+	{
+		matrix[i] = ft_strdup(prompt->word);
+		i++;
+		prompt = prompt->next;
+	}
+	matrix[i] = NULL;
+	return (matrix);
+
+}
 
 char	**env_to_matrix(t_list *env)
 {
@@ -76,38 +103,47 @@ static char	*use_path(char *arg, t_list *env)
 	return (arg);
 }
 
-static void	pid_zero(char **arg, char **new_env)
+static void	pid_zero(t_word *prompt, char **new_env)
 {
+	char	**arg;
+
+	arg = transform_list(prompt);
 	if (execve(arg[0], arg, new_env) == -1)
 	{
 		if (errno == ENOENT)
 			printf("minishell: command not found: %s\n", arg[0]);
 		else
 			printf("%s: %s\n", arg[0], strerror(errno));
+		free_matrix(arg);
 		exit(127);
 	}
 	else
+	{
+		free_matrix(arg);
 		exit(EXIT_SUCCESS);
+	}
 }
 
 int	exec_command(t_data *data)
 {
 	int					status;
 	extern unsigned int	g_exit_status;
+	t_word				*prompt;
 
-	if (ft_strncmp("./", data->arg[0], 2))
-		data->arg[0] = use_path(data->arg[0], data->env);
-	data->pid = fork();
+	prompt = data->prompt->head;
+	if (ft_strncmp("./", prompt->word, 2))
+		prompt->word = use_path(prompt->word, data->env);
+	prompt->pid = fork();
 	data->envp = env_to_matrix(data->env);
-	if (data->pid < 0)
+	if (prompt->pid < 0)
 	{
 		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
-	else if (data->pid == 0)
-		pid_zero(data->arg, data->envp);
+	else if (prompt->pid == 0)
+		pid_zero(prompt, data->envp);
 	else
-		waitpid(data->pid, &status, 0);
+		waitpid(prompt->pid, &status, 0);
 	free_matrix(data->envp);
 	g_exit_status = WEXITSTATUS(status);
 	return (1);
