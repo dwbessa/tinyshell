@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 09:05:16 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/05 11:02:45 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:05:45 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	quote_number(t_data *data)
 
 void	quote_error()
 {
-	printf("minishell: error: even number of quotes\n");
+	printf("minishell: syntax error: even number of quotes\n");
 }
