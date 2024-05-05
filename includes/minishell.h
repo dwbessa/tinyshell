@@ -6,11 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/06 16:56:32 by dbessa           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/05 18:48:07 by dwbessa          ###   ########.fr       */
->>>>>>> devBessa
+/*   Updated: 2024/05/05 19:15:16 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +33,6 @@
 # include <term.h>
 # include "../libft/includes/libft.h"
 
-<<<<<<< HEAD
-int			exec_command(char **arg, t_list **env);
-int			many_char(char *s, char c);
-int			is_builtin(char **arg, char *prompt, t_list **env, char *pwd);
-int			func_pwd(void);
-int			func_cd(char **argument, t_list **envp);
-int			func_echo(char **argument);
-int			func_env(t_list **env);
-int			func_export(char **arg, t_list *env);
-int			func_unset(char **arg, t_list **env);
-
-void		func_exit(char **arg, char *prompt, t_list **envp, char *pwd);
-void		print_env(void);
-void		handle_prompt(char *prompt, char **arg, char *pwd, t_list **env);
-void		free_matrix(char **arguments);
-void		free_all(char **arguments, char *prompt);
-void		mini_clear(void);
-void		sigint_handle(int signal);
-void		set_sighandle(void);
-
-char		*shell_name(t_list *env);
-char		**expand_prompt(char **arg, t_list **env);
-
-t_list		*get_env_lst(void);
-=======
 typedef struct s_word
 {
 	char			*word;
@@ -144,6 +115,5 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
->>>>>>> devBessa
 
 #endif
