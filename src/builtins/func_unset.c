@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:54:42 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/04 10:36:16 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 18:00:35 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
+void	unsetting_env(t_list *prev, t_list *curr, char *arg, t_list **env)
 {
 	t_list		*next;
 	char		*content;
@@ -22,8 +22,8 @@ void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 	{
 		next = curr->next;
 		content = (char *)curr->content;
-		len = ft_strlen(*arg);
-		if (!ft_strncmp(*arg, curr->content, len)
+		len = ft_strlen(arg);
+		if (!ft_strncmp(arg, curr->content, len)
 			&& (content[len] == '=' || content[len] == '\0'))
 		{
 			if (prev)
@@ -38,24 +38,26 @@ void	unsetting_env(t_list *prev, t_list *curr, char **arg, t_list **env)
 	}
 }
 
-int	func_unset(char **arg, t_list **env)
+int	func_unset(t_word *prompt, t_list **env)
 {
 	extern unsigned int	g_exit_status;
 	t_list				*prev;
 	t_list				*curr;
+	t_word				*unset;
 
-	arg++;
-	if (!*arg)
+	unset = prompt->head;
+	if (!unset->next)
 	{
 		g_exit_status = 0;
 		return (1);
 	}
-	while (*arg)
+	unset = unset->next;
+	while (unset)
 	{
 		prev = NULL;
 		curr = *env;
-		unsetting_env(prev, curr, arg, env);
-		arg++;
+		unsetting_env(prev, curr, unset->word, env);
+		unset = unset->next;
 	}
 	g_exit_status = 0;
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/06 16:27:33 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 18:30:20 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,22 @@ unsigned int	g_exit_status;
 
 int	main(void)
 {
-	char		*prompt;
-	char		**arguments;
-	char		*pwd;
-	t_list		*env;
+	t_data	data;
 
-	arguments = NULL;
-	env = get_env_lst();
+	data.env = get_env_lst();
 	set_sighandle();
 	while (42)
 	{
-		pwd = shell_name(env);
-		prompt = readline(pwd);
-		if (prompt && *prompt)
-			handle_prompt(prompt, arguments, pwd, &env);
-		if (prompt == NULL || *prompt == EOF)
-			func_exit(arguments, prompt, &env, pwd);
-		free(prompt);
-		free(pwd);
+		data.pwd = shell_name(data.env);
+		data.raw_cmd = readline(data.pwd);
+		if (data.raw_cmd == NULL || *data.raw_cmd == EOF)
+			func_exit(&data);
+		if (data.raw_cmd && *data.raw_cmd)
+			handle_prompt(&data);
+		free(data.raw_cmd);
+		free(data.pwd);
 	}
-	ft_lstclear(&env, free);
+	ft_lstclear(&data.env, free);
 	return (0);
 }
 

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_exit.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/24 10:57:03 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 18:30:32 by dwbessa          ###   ########.fr       */
+/*   Created: 2024/05/05 12:25:57 by dwbessa           #+#    #+#             */
+/*   Updated: 2024/05/05 16:59:16 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	func_exit(t_data *data)
+int	ft_isspace(int c)
 {
-	extern unsigned int	g_exit_status;
-
-	printf("minishell: exit\n");
-	if (data->raw_cmd == NULL || *data->raw_cmd == EOF)
-	{
-		free(data->pwd);
-		ft_lstclear(&data->env, free);
-		exit(EXIT_SUCCESS);
-	}
-	free(data->raw_cmd);
-	free(data->pwd);
-	ft_lstclear(&data->env, free);
-	rl_clear_history();
-	g_exit_status = 0;
-	exit(g_exit_status);
+	if (c == ' ' || c == '\n' || c == '\t'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	else
+		return (0);
 }
