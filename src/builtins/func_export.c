@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 17:52:49 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 18:11:13 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	export_cmd(t_word *export, t_list *env)
 	{
 		if (ft_isdigit(*export->word))
 		{
-			printf("minishell: export: `%s`: not a valid identifier\n", export->word);
+			printf("minishell: export: `%s`: "
+				"not a valid identifier\n", export->word);
 			g_exit_status = 1;
 		}
 		else if (!update_var(export->word, env))
