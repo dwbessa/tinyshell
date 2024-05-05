@@ -3,51 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:34:50 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 17:43:58 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	without_argument(char **argument)
+void	without_argument(t_word *prompt)
 {
-	int	i;
-
-	i = 1;
-	while (argument[i])
+	while (prompt)
 	{
-		printf("%s", argument[i]);
-		if (argument[i + 1] != NULL)
+		printf("%s", prompt->word);
+		if (prompt->next)
 			printf(" ");
 		else
 			printf("\n");
-		i++;
+		prompt = prompt->next;
 	}
 }
 
-int	func_echo(char **argument)
+int	func_echo(t_word *prompt)
 {
 	extern unsigned int	g_exit_status;
-	int					i;
+	t_word				*echo;
 
-	if (!argument[1])
-		printf("\n");
-	else if (ft_strncmp(argument[1], "-n", 2) == 0)
+	echo = prompt->head;
+	if (!echo->next)
 	{
-		i = 2;
-		while (argument[i])
+		printf("\n");
+		return (1);
+	}
+	echo = echo->next;
+	if (!ft_strncmp(echo->word, "-n", 3))
+	{
+		echo = echo->next;
+		while (echo)
 		{
-			printf("%s", argument[i]);
-			if (argument[i + 1] != NULL)
+			printf("%s", echo->word);
+			if (echo->next)
 				printf(" ");
-			i++;
+			echo = echo->next;
 		}
 	}
 	else
-		without_argument(argument);
+		without_argument(echo);
 	g_exit_status = 0;
 	return (1);
 }

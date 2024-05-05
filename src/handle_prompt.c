@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 16:57:09 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 17:36:19 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	tokenize_prompt(t_word	**prompt)
 	int		last_flag;
 
 	token = (*prompt)->head;
+	last_flag = token->flag;
 	while (token)
 	{
 		token->flag = give_token(token->word, last_flag);

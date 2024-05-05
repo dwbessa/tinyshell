@@ -6,7 +6,7 @@
 /*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 17:00:32 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/05 17:55:03 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
 int				func_pwd(void);
-int				func_cd(char **argument, t_list *env);
-int				func_echo(char **argument);
+int				func_cd(t_word *prompt);
+int				func_echo(t_word *prompt);
 int				func_env(t_list *env);
-int				func_export(char **arg, t_list *env);
-int				func_unset(char **arg, t_list **env);
+int				func_export(t_word *prompt, t_list *env);
+int				func_unset(t_word *prompt, t_list **env);
 int				quote_number(t_data *data);
 
 void			func_exit(t_data *data);

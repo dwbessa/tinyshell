@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:33:41 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 17:52:49 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,22 @@ int	update_var(char *arg, t_list *env)
 	return (0);
 }
 
-int	export_cmd(char **arg, t_list *env)
+int	export_cmd(t_word *export, t_list *env)
 {
 	t_list				*node;
 	extern unsigned int	g_exit_status;
 
 	g_exit_status = 0;
-	while (*arg)
+	while (export)
 	{
-		if (ft_isdigit(**arg))
+		if (ft_isdigit(*export->word))
 		{
-			printf("minishell: export: `%s`: not a valid identifier\n", *arg);
+			printf("minishell: export: `%s`: not a valid identifier\n", export->word);
 			g_exit_status = 1;
 		}
-		else if (!update_var(*arg, env))
+		else if (!update_var(export->word, env))
 		{
-			node = ft_lstnew(ft_strdup(*arg));
+			node = ft_lstnew(ft_strdup(export->word));
 			if (!node)
 			{
 				ft_lstclear(&node, free);
@@ -80,21 +80,23 @@ int	export_cmd(char **arg, t_list *env)
 			}
 			ft_lstadd_back(&env, node);
 		}
-		arg++;
+		export = export->next;
 	}
 	return (g_exit_status);
 }
 
-int	func_export(char **arg, t_list *env)
+int	func_export(t_word *prompt, t_list *env)
 {
 	extern unsigned int	g_exit_status;
+	t_word				*export;
 
-	arg++;
-	if (!*arg)
+	export = prompt->head;
+	if (!export->next)
 	{
 		sort_env(env);
 		return (1);
 	}
-	g_exit_status = export_cmd(arg, env);
+	export = export->next;
+	g_exit_status = export_cmd(export, env);
 	return (1);
 }
