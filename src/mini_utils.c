@@ -57,6 +57,8 @@ static char	*get_session(t_list *env, char *output)
 			break ;
 		}
 		env = env->next;
+		if (!env)
+			output = ft_strjoin_free(output, "linux");
 	}
 	return (output);
 }
