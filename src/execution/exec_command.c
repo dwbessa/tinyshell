@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 18:33:22 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/07 11:55:52 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**transform_list(t_word *prompt)
-{
-	int		i;
-	t_word	*aux;
-	char	**matrix;
-
-	i = 0;
-	aux = prompt->head;
-	while (prompt)
-	{
-		i++;
-		prompt = prompt->next;
-	}
-	prompt = aux->head;
-	matrix = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (prompt)
-	{
-		matrix[i] = ft_strdup(prompt->word);
-		i++;
-		prompt = prompt->next;
-	}
-	matrix[i] = NULL;
-	return (matrix);
-
-}
 
 char	**env_to_matrix(t_list *env)
 {

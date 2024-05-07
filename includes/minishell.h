@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 19:15:16 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/07 11:56:10 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ void			mini_clear(void);
 void			sigint_handle(int signal);
 void			set_sighandle(void);
 void			quote_error(void);
+void			expand_prompt(t_word **prompt);
 
 char			*shell_name(t_list *env);
-char			**expand_prompt(char **arg, t_list *env);
+char			**transform_list(t_word *prompt);
 
 t_list			*get_env_lst(void);
 

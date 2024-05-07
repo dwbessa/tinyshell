@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lstutils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/05 16:57:40 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/07 11:55:48 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,30 @@ t_list	*ms_create_env_lst(void)
 		i++;
 	}
 	return (head);
+}
+
+char	**transform_list(t_word *prompt)
+{
+	int		i;
+	t_word	*aux;
+	char	**matrix;
+
+	i = 0;
+	aux = prompt->head;
+	while (prompt)
+	{
+		i++;
+		prompt = prompt->next;
+	}
+	prompt = aux->head;
+	matrix = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (prompt)
+	{
+		matrix[i] = ft_strdup(prompt->word);
+		i++;
+		prompt = prompt->next;
+	}
+	matrix[i] = NULL;
+	return (matrix);
 }
