@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/07 11:56:10 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:43:11 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,8 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
+int				pipe_operator (t_data *data);
+char			*use_path(char *arg, t_list *env);
+char			**env_to_matrix(t_list *env);
 
 #endif

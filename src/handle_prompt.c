@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/07 11:51:29 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/08 18:59:26 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ void	handle_prompt(t_data *data)
 	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
 	tokenize_prompt(&data->prompt);
 	expand_prompt(&data->prompt);
-	if (!is_builtin(data))
+	if (ft_strchr_int(data->raw_cmd, '|') == 1)
+		pipe_operator(data);
+	else if (!is_builtin(data))
 		exec_command(data);
+	print_word(&data->prompt);
 	free_prompt(data->prompt);
 }
 
@@ -60,14 +63,14 @@ unsigned int	give_token(char *word, int last_flag)
 	return (MS_WORD);
 }
 
-// void	print_word(t_word **prompt)
-// {
-// 	t_word	*print;
+void	print_word(t_word **prompt)
+{
+	t_word	*print;
 
-// 	print = *prompt;
-// 	while (print != NULL)
-// 	{
-// 		printf("WORD = %s\nTOKEN = %d\n", print->word, print->flag);
-// 		print = print->next;
-// 	}
-// }
+	print = *prompt;
+	while (print != NULL)
+	{
+		printf("WORD = %s\nTOKEN = %d\n", print->word, print->flag);
+		print = print->next;
+	}
+}
