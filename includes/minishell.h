@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/08 16:47:56 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:43:11 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ typedef struct s_word
 typedef struct s_data
 {
 	t_list			*env;
-	int				fd[2];
-	char			**args;
 	char			**envp;
 	char			*pwd;
 	char			*raw_cmd;
@@ -104,7 +102,6 @@ void			expand_prompt(t_word **prompt);
 char			*shell_name(t_list *env);
 char			**transform_list(t_word *prompt);
 
-char			**env_to_matrix(t_list *env);
 t_list			*get_env_lst(void);
 
 t_word			*tokenizer(t_data *data);
@@ -119,9 +116,8 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
-
+int				pipe_operator (t_data *data);
 char			*use_path(char *arg, t_list *env);
-int				execute_command_pipe(int i, char **args, t_data *data);
-int	pipe_operator(int fd[], char **args, t_data *data);
+char			**env_to_matrix(t_list *env);
 
 #endif

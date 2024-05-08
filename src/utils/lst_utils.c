@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstutils.c                                         :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/07 11:55:48 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/08 18:59:44 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**transform_list(t_word *prompt)
 
 	i = 0;
 	aux = prompt->head;
-	while (prompt)
+	while (prompt && prompt->flag != MS_PIPE)
 	{
 		i++;
 		prompt = prompt->next;
@@ -86,7 +86,7 @@ char	**transform_list(t_word *prompt)
 	prompt = aux->head;
 	matrix = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (prompt)
+	while (prompt && prompt->flag != MS_PIPE)
 	{
 		matrix[i] = ft_strdup(prompt->word);
 		i++;
