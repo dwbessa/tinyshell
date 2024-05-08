@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:20:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/08 18:34:20 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/05 12:37:40 by dwbessa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ int			ft_strcmp(const char *s1, const char *s2);
 void		ft_sortlist(t_list *lst, int (*cmp)(const char *, const char *));
 t_list		*ft_lstcopy(t_list *lst);
 char		**ft_split_charset(char *str, char *charset);
+int			ft_isspace(int c);
 
 #endif

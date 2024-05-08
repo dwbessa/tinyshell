@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/19 22:40:15 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:41:11 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -33,7 +33,7 @@ char	**env_to_matrix(t_list *env)
 	return (new_env);
 }
 
-char	*transform_arg(char *arg, t_list *env)
+static char	*transform_arg(char *arg, t_list *env)
 {
 	char	**all_path;
 	char	*path;
@@ -76,38 +76,47 @@ char	*use_path(char *arg, t_list *env)
 	return (arg);
 }
 
-void	pid_zero(char **arg, char **new_env)
+static void	pid_zero(t_word *prompt, char **new_env)
 {
+	char	**arg;
+
+	arg = transform_list(prompt);
 	if (execve(arg[0], arg, new_env) == -1)
 	{
 		if (errno == ENOENT)
 			printf("minishell: command not found: %s\n", arg[0]);
 		else
 			printf("%s: %s\n", arg[0], strerror(errno));
+		free_matrix(arg);
 		exit(127);
 	}
 	else
+	{
+		free_matrix(arg);
 		exit(EXIT_SUCCESS);
+	}
 }
 
 int	exec_command(t_data *data)
 {
 	int					status;
 	extern unsigned int	g_exit_status;
+	t_word				*prompt;
 
-	if (ft_strncmp("./", data->arg[0], 2))
-		data->arg[0] = use_path(data->arg[0], data->env);
-	data->pid = fork();
+	prompt = data->prompt->head;
+	if (ft_strncmp("./", prompt->word, 2))
+		prompt->word = use_path(prompt->word, data->env);
+	prompt->pid = fork();
 	data->envp = env_to_matrix(data->env);
-	if (data->pid < 0)
+	if (prompt->pid < 0)
 	{
 		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
-	else if (data->pid == 0)
-		pid_zero(data->arg, data->envp);
+	else if (prompt->pid == 0)
+		pid_zero(prompt, data->envp);
 	else
-		waitpid(data->pid, &status, 0);
+		waitpid(prompt->pid, &status, 0);
 	free_matrix(data->envp);
 	g_exit_status = WEXITSTATUS(status);
 	return (1);

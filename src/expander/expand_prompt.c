@@ -3,27 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   expand_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:26:12 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/19 15:59:27 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:54:42 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_dollar_question(char *arg, unsigned int g_exit_status)
+static char	*remove_quotes(char *arg)
+{
+	char	*new;
+
+	if (*arg == '\"')
+	{
+		new = ft_strtrim(arg, "\"");
+		free(arg);
+		arg = new;
+	}
+	else if (*arg == '\'')
+	{
+		new = ft_strtrim(arg, "\'");
+		free(arg);
+		arg = new;
+	}
+	return (arg);
+}
+
+static char	*handle_dollar_question(char *arg, unsigned int g_exit_status)
 {
 	free(arg);
 	return (ft_itoa(g_exit_status));
 }
 
-char	*handle_dollar(char *arg, t_list *env)
+static char	*handle_dollar(char *arg, t_list *env)
 {
 	t_list	*aux;
+	char	*new;
 	int		len;
 
 	aux = env;
+	if (*arg == '\"')
+	{
+		new = ft_strtrim(arg, "\"");
+		free(arg);
+		arg = new;
+	}
 	while (aux)
 	{
 		len = ft_strlen(arg + 1);
@@ -37,7 +63,7 @@ char	*handle_dollar(char *arg, t_list *env)
 	return (arg);
 }
 
-char	*handle_tilde(char *arg, t_list *env)
+static char	*handle_tilde(char *arg, t_list *env)
 {
 	t_list	*aux;
 	char	*temp;
@@ -57,21 +83,25 @@ char	*handle_tilde(char *arg, t_list *env)
 	return (arg);
 }
 
-char	**expand_prompt(char **arg, t_list *env)
+void	expand_prompt(t_word **prompt)
 {
-	int					i;
+	t_word				*expand;
 	extern unsigned int	g_exit_status;
 
-	i = 0;
-	while (arg[i])
+	expand = *prompt;
+	while (expand)
 	{
-		if (!ft_strncmp(arg[i], "$?", 3))
-			arg[i] = handle_dollar_question(arg[i], g_exit_status);
-		else if (!ft_strncmp(arg[i], "$", 1))
-			arg[i] = handle_dollar(arg[i], env);
-		else if (!ft_strncmp(arg[i], "~", 1))
-			arg[i] = handle_tilde(arg[i], env);
-		i++;
+		if (*expand->word != '\'' && (!ft_strncmp(expand->word, "$?", 3)
+				|| !ft_strncmp(expand->word, "\"$?\"", 5)))
+			expand->word = handle_dollar_question(expand->word, g_exit_status);
+		else if (*expand->word != '\'' && (!ft_strncmp(expand->word, "$", 1)
+				|| !ft_strncmp(expand->word, "\"$", 2)))
+			expand->word = handle_dollar(expand->word, expand->env);
+		else if (!ft_strncmp(expand->word, "~", 1) && (*expand->word != '\''
+				|| *expand->word != '\"'))
+			expand->word = handle_tilde(expand->word, expand->env);
+		else if ((*expand->word != '\'' || *expand->word != '\"'))
+			expand->word = remove_quotes(expand->word);
+		expand = expand->next;
 	}
-	return (arg);
 }

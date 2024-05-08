@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/20 01:44:50 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:51:29 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,60 @@
 
 void	handle_prompt(t_data *data)
 {
-	char	**split_arg;
-	
-	data->nbr_of_cmds = count_commands(data->raw_cmd);
-	split_arg = ft_split(data->raw_cmd, ' ');
 	add_history(data->raw_cmd);
-	data->arg = expand_prompt(split_arg, data->env);
-	if (data->nbr_of_cmds == 1)
-	{
-		//ft_init_data_one_cmd(data);
-		one_command(data);
-	}
-	else if (data->nbr_of_cmds > 1)
-	{
-		init_data_multiple_cmds(data);
-		multiple_commands(data);
-	}
-	free_matrix(data->arg);
+	if (!quote_number(data))
+		return (quote_error());
+	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	tokenize_prompt(&data->prompt);
+	expand_prompt(&data->prompt);
+	if (!is_builtin(data))
+		exec_command(data);
+	free_prompt(data->prompt);
 }
+
+void	tokenize_prompt(t_word	**prompt)
+{
+	t_word	*token;
+	int		last_flag;
+
+	token = (*prompt)->head;
+	last_flag = token->flag;
+	while (token)
+	{
+		token->flag = give_token(token->word, last_flag);
+		last_flag = token->flag;
+		token = token->next;
+	}
+}
+
+unsigned int	give_token(char *word, int last_flag)
+{
+	if (!word)
+		return (-1);
+	if (!ft_strncmp("|", word, 2))
+		return (MS_PIPE);
+	else if (!ft_strncmp("<", word, 2))
+		return (MS_REDIRECT_IN);
+	else if (!ft_strncmp(">", word, 2))
+		return (MS_REDIRECT_OUT);
+	else if (!ft_strncmp(">>", word, 3))
+		return (MS_APPEND);
+	else if (!ft_strncmp("<<", word, 3))
+		return (MS_HEREDOC);
+	else if (last_flag == MS_REDIRECT_OUT || last_flag == MS_REDIRECT_IN
+		|| last_flag == MS_HEREDOC || last_flag == MS_APPEND)
+		return (MS_REDIRECT_FILE);
+	return (MS_WORD);
+}
+
+// void	print_word(t_word **prompt)
+// {
+// 	t_word	*print;
+
+// 	print = *prompt;
+// 	while (print != NULL)
+// 	{
+// 		printf("WORD = %s\nTOKEN = %d\n", print->word, print->flag);
+// 		print = print->next;
+// 	}
+// }

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/19 18:03:26 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:45:30 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -24,10 +24,13 @@ int	main(void)
 	{
 		data.pwd = shell_name(data.env);
 		data.raw_cmd = readline(data.pwd);
-		if (data.raw_cmd && *data.raw_cmd)
-			handle_prompt(&data);
+		data.args = ft_split(data.raw_cmd, ' ');
 		if (data.raw_cmd == NULL || *data.raw_cmd == EOF)
 			func_exit(&data);
+		// printf("%s", use_path(data.args[0], data.env));
+		pipe_operator(data.fd, data.args, &data);
+		// if (data.raw_cmd && *data.raw_cmd)
+		// 	handle_prompt(&data);
 		free(data.raw_cmd);
 		free(data.pwd);
 	}

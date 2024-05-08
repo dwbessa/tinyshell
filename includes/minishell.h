@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/20 01:38:10 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:43:56 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -33,65 +33,94 @@
 # include <term.h>
 # include "../libft/includes/libft.h"
 
+typedef struct s_word
+{
+	char			*word;
+	unsigned int	flag;
+	int				fd_in;
+	int				fd_out;
+	int				ret;
+	pid_t			pid;
+	struct s_word	*head;
+	struct s_list	*env;
+	struct s_word	*next;
+}	t_word;
+
 typedef struct s_data
 {
-	int		pid;
-	int status;
-
-	int		std_in;
-	int		std_out;
-
-	t_list	*env;
-	
-	char	**envp;
-	char	**cmd;
-	char	**arg;
-	char	**mul_cmds;
-	int 	pipefd[2];
-
-	char	*pwd;
-	char	*raw_cmd;
-	char	*cleaned_cmd;
-	char	*infile;
-	char	*outfile;
-
-	t_list	*in_files;
-	t_list	*out_files;
-	int		nbr_of_cmds;
+	t_list			*env;
+	int				fd[2];
+	char			**args;
+	char			**envp;
+	char			*pwd;
+	char			*raw_cmd;
+	struct s_word	*prompt;
 }	t_data;
 
-int			exec_command(t_data *data);
-int			many_char(char *s, char c);
-int			is_builtin(t_data *data);
-int			func_pwd(void);
-int			func_cd(char **argument, t_list *env);
-int			func_echo(char **argument);
-int			func_env(t_list *env);
-int			func_export(char **arg, t_list *env);
-int			func_unset(char **arg, t_list **env);
+enum e_token
+{
+	MS_WORD = 1,
+	MS_PIPE = 2,
+	MS_REDIRECT_IN = 4,
+	MS_REDIRECT_OUT = 8,
+	MS_REDIRECT_FILE = 16,
+	MS_APPEND = 32,
+	MS_HEREDOC = 64,
+};
 
-void		func_exit(t_data *data);
-void		print_env(void);
-void		handle_prompt(t_data *data);
-void		free_matrix(char **arguments);
-void		free_all(char **arguments, char *prompt);
-void		mini_clear(void);
-void		sigint_handle(int signal);
-void		set_sighandle(void);
+enum e_builtins
+{
+	MS_ECHO = 256,
+	MS_CD = 512,
+	MS_PWD = 1024,
+	MS_EXPORT = 2048,
+	MS_UNSET = 4096,
+	MS_ENV = 8192,
+	MS_EXIT = 16384,
+};
 
-char		*shell_name(t_list *env);
-char		**expand_prompt(char **arg, t_list *env);
+int				quote_number(t_data *data);
+int				exec_command(t_data *data);
+int				many_char(char *s, char c);
+int				is_builtin(t_data *data);
+int				func_pwd(void);
+int				func_cd(t_word *prompt);
+int				func_echo(t_word *prompt);
+int				func_env(t_list *env);
+int				func_export(t_word *prompt, t_list *env);
+int				func_unset(t_word *prompt, t_list **env);
 
-t_list		*get_env_lst(void);
+void			func_exit(t_data *data);
+void			print_env(void);
+void			handle_prompt(t_data *data);
+void			free_matrix(char **arguments);
+void			free_all(char **arguments, char *prompt);
+void			mini_clear(void);
+void			sigint_handle(int signal);
+void			set_sighandle(void);
+void			quote_error(void);
+void			expand_prompt(t_word **prompt);
 
-/* Parses funcs */
+char			*shell_name(t_list *env);
+char			**transform_list(t_word *prompt);
 
-int	count_commands(char *raw_command);
-int	multiple_commands(t_data *data);
-char	**separate_cmds(t_data *data);
-void	init_data_multiple_cmds(t_data *data);
-void	exec_multiple(t_data *data, char *raw_cmd);
-char	*transform_arg(char *arg, t_list *env);
+t_list			*get_env_lst(void);
 
+t_word			*tokenizer(t_data *data);
+unsigned int	give_token(char *word, int last_flag);
+void			print_word(t_word **prompt);
+void			free_prompt(t_word *prompt);
+t_word			*ms_lstnew(void *word);
+void			ms_lstadd_back(t_word **lst, t_word *new);
+t_list			*ms_create_env_lst(void);
+t_word			*ms_create_word_lst(char *line, t_list *env_lst);
+int				get_word_len(char *line);
+int				ms_ismeta(char *c);
+int				ms_find_next_quotes(char *line);
+void			tokenize_prompt(t_word **prompt);
+
+char			*use_path(char *arg, t_list *env);
+int				execute_command_pipe(int i, char **args, t_data *data);
+int	pipe_operator(int fd[], char **args, t_data *data);
 
 #endif
