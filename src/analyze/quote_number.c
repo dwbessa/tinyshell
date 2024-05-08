@@ -38,5 +38,8 @@ int	quote_number(t_data *data)
 
 void	quote_error(void)
 {
+    extern unsigned int   g_exit_status;
+
 	printf("minishell: syntax error: even number of quotes\n");
+	g_exit_status = 2;
 }
