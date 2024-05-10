@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:17:45 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/10 15:23:33 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:52:35 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -32,7 +32,7 @@ void	exec_multiple(t_word *prompt, char *raw_cmd)
 {
 	char	**splitted_cmd;
 
-	splitted_cmd = ft_split(raw_cmd, ' ');
+	splitted_cmd = transform_list(prompt);
 	if (!raw_cmd[0])
 		exit(0);
 	else

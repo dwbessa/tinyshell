@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 15:08:54 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:52:20 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -102,7 +102,8 @@ void			quote_error(void);
 void			expand_prompt(t_word **prompt);
 
 char			*shell_name(t_list *env);
-char			**transform_list(t_word *prompt);
+char	**transform_list(t_word *prompt);
+
 
 t_list			*get_env_lst(void);
 
@@ -122,7 +123,7 @@ void			tokenize_prompt(t_word **prompt);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
 
-void	exec_multiple(t_word *prompt, char *raw_cmd);
-int	ft_multiple_commands(t_data *data);
+void		exec_multiple(t_word *prompt, char *raw_cmd);
+int			ft_multiple_commands(t_data *data);
 
 #endif

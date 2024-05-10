@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/10 14:34:10 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:56:57 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -72,26 +72,28 @@ t_list	*ms_create_env_lst(void)
 
 char	**transform_list(t_word *prompt)
 {
-	int		i;
-	t_word	*aux;
-	char	**matrix;
+	t_word				*aux;
+	char				**mat;
+	unsigned int		mat_positions;
+	unsigned int		i;
 
-	i = 0;
-	aux = prompt->head;
-	while (prompt)
+	if (!prompt)
+		return (NULL);
+	aux = prompt;
+	i = -1;
+	mat_positions = 0;
+	while (aux && aux->flag == MS_WORD)
 	{
-		i++;
+		aux = aux->next;
+		mat_positions++;
+	}
+	mat = ft_calloc(mat_positions + 1, sizeof(char *));
+	if (!mat)
+		return (NULL);
+	while (++i < mat_positions)
+	{
+		mat[i] = ft_strdup(prompt->word);
 		prompt = prompt->next;
 	}
-	prompt = aux->head;
-	matrix = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (prompt)
-	{
-		matrix[i] = ft_strdup(prompt->word);
-		i++;
-		prompt = prompt->next;
-	}
-	matrix[i] = NULL;
-	return (matrix);
+	return (mat);
 }
