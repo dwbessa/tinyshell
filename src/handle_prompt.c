@@ -6,7 +6,11 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/10 14:00:12 by dbessa           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/10 18:36:13 by dbessa           ###   ########.fr       */
+>>>>>>> 40c61ad (test: trying more things to add pipes)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +18,26 @@
 
 void	handle_prompt(t_data *data)
 {
+	t_word	*prompt;
+	
 	add_history(data->raw_cmd);
 	if (!quote_number(data))
 		return (quote_error());
-	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
-	tokenize_prompt(&data->prompt);
-	expand_prompt(&data->prompt);
+	prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	tokenize_prompt(&prompt);
+	expand_prompt(&prompt);
+	prompt->env = data->env;
+	data->prompt = prompt->head;
 	if (ft_strchr_int(data->raw_cmd, '|') == 1)
-		pipe_operator(data);
+	{
+		ms_pipe(prompt);
+		ms_exec_pipe(prompt, &prompt->env);
+		//exec_all_commands(data);
+	}
 	else if (!is_builtin(data))
 		exec_command(data);
-	print_word(&data->prompt);
-	free_prompt(data->prompt);
+	print_word(&prompt);
+	free_prompt(prompt);
 }
 
 void	tokenize_prompt(t_word	**prompt)
