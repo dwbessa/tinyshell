@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
@@ -6,70 +6,35 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:17:45 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/08 19:43:18 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:23:33 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
-int	theres_pipe(t_word *prompt)
+static void	exec_generic_multiple(t_word *prompt, char **splitted_cmd)
 {
-	t_word	*aux;
+	char	*path;
+	char 	**envp;
 
-	aux = prompt;
-	while (prompt)
-	{
-		if (prompt->flag == MS_PIPE)
-			return (1);
-		prompt = prompt->next;
-	}
-	prompt = aux;
-	return (0);
-}
-
-int	execute_command_pipe(t_word *prompt, int *fd)
-{
-	char	**envp;
-	char	**single_cmd;
-	
-	dup2(fd[1], STDOUT_FILENO);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-    prompt->word = use_path(prompt->word, prompt->env);
+	path = use_path(prompt->word, prompt->env);
 	envp = env_to_matrix(prompt->env);
-	single_cmd = transform_list(prompt);
-	if ((execve(prompt->word, single_cmd, envp)) == -2)
+	// single_cmd = transform_list(prompt);
+	if (!path)
 	{
-		printf("Error execve\n");
+		ft_putstr_fd("path nao encontrado", 2);
 		exit(1);
 	}
-	//free_matrix(single_cmd);
-    return (0);
+	execve(path, splitted_cmd, envp);
 }
 
-int	pipe_operator (t_data *data)
+void	exec_multiple(t_word *prompt, char *raw_cmd)
 {
-	int	pid1;
-	int	pid2;
-	int	fd[2];
-	t_word	*prompt;
+	char	**splitted_cmd;
 
-	prompt = data->prompt->head;
-    (void)pid2;
-	while (prompt)
-	{
-		if (pipe(fd) == -1)
-			return (1);
-		pid1 = fork();
-		if (pid1 == 0)
-			execute_command_pipe(prompt, fd);
-		else
-		{
-			waitpid(pid1, NULL, 0);
-			close(fd[1]);
-		}
-
-		prompt = prompt->next;
-	}
-    return (0);
+	splitted_cmd = ft_split(raw_cmd, ' ');
+	if (!raw_cmd[0])
+		exit(0);
+	else
+		exec_generic_multiple(prompt, splitted_cmd);
 }

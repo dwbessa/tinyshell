@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/08 18:59:26 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:21:23 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -21,7 +21,9 @@ void	handle_prompt(t_data *data)
 	tokenize_prompt(&data->prompt);
 	expand_prompt(&data->prompt);
 	if (ft_strchr_int(data->raw_cmd, '|') == 1)
-		pipe_operator(data);
+	{
+		ft_multiple_commands(data);
+	}
 	else if (!is_builtin(data))
 		exec_command(data);
 	print_word(&data->prompt);

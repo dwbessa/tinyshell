@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/08 18:59:44 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:34:10 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -78,7 +78,7 @@ char	**transform_list(t_word *prompt)
 
 	i = 0;
 	aux = prompt->head;
-	while (prompt && prompt->flag != MS_PIPE)
+	while (prompt)
 	{
 		i++;
 		prompt = prompt->next;
@@ -86,7 +86,7 @@ char	**transform_list(t_word *prompt)
 	prompt = aux->head;
 	matrix = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (prompt && prompt->flag != MS_PIPE)
+	while (prompt)
 	{
 		matrix[i] = ft_strdup(prompt->word);
 		i++;

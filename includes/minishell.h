@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/08 17:43:11 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:08:54 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -37,6 +37,7 @@ typedef struct s_word
 {
 	char			*word;
 	unsigned int	flag;
+	int				fd[2];
 	int				fd_in;
 	int				fd_out;
 	int				ret;
@@ -49,6 +50,7 @@ typedef struct s_word
 typedef struct s_data
 {
 	t_list			*env;
+	int				status;
 	char			**envp;
 	char			*pwd;
 	char			*raw_cmd;
@@ -116,8 +118,11 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
-int				pipe_operator (t_data *data);
+// int				pipe_operator (t_data *data);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
+
+void	exec_multiple(t_word *prompt, char *raw_cmd);
+int	ft_multiple_commands(t_data *data);
 
 #endif
