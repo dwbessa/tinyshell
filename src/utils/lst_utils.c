@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/08 18:59:44 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:18:47 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ t_list	*ms_create_env_lst(void)
 	return (head);
 }
 
-char	**transform_list(t_word *prompt)
+char	**transform_list(t_word **prompt1)
 {
 	int		i;
+	t_word	*prompt;
 	t_word	*aux;
 	char	**matrix;
 
 	i = 0;
+	prompt = *prompt1;
 	aux = prompt->head;
 	while (prompt && prompt->flag != MS_PIPE)
 	{
