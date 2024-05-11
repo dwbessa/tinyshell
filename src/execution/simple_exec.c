@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 14:17:52 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:42:41 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	pid_zero(t_word *prompt, char **new_env)
 {
 	char	**arg;
 
-	arg = transform_list(&prompt);
+	arg = transform_list(prompt);
 	if (execve(arg[0], arg, new_env) == -1)
 	{
 		if (errno == ENOENT)

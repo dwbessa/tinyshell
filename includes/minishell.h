@@ -6,11 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/10 14:18:30 by dbessa           ###   ########.fr       */
-=======
 /*   Updated: 2024/05/10 18:27:05 by dbessa           ###   ########.fr       */
->>>>>>> 40c61ad (test: trying more things to add pipes)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +100,7 @@ void			quote_error(void);
 void			expand_prompt(t_word **prompt);
 
 char			*shell_name(t_list *env);
-char			**transform_list(t_word **prompt1);
+char			**transform_list(t_word *prompt);
 
 t_list			*get_env_lst(void);
 
