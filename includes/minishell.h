@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 15:52:20 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/12 04:29:35 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -37,7 +37,6 @@ typedef struct s_word
 {
 	char			*word;
 	unsigned int	flag;
-	int				fd[2];
 	int				fd_in;
 	int				fd_out;
 	int				ret;
@@ -102,7 +101,7 @@ void			quote_error(void);
 void			expand_prompt(t_word **prompt);
 
 char			*shell_name(t_list *env);
-char	**transform_list(t_word *prompt);
+char			**transform_list(t_word *prompt);
 
 
 t_list			*get_env_lst(void);
@@ -119,11 +118,18 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
-// int				pipe_operator (t_data *data);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
 
-void		exec_multiple(t_word *prompt, char *raw_cmd);
-int			ft_multiple_commands(t_data *data);
+/* pipe  - Success */
+t_word	*get_next_command_pipe(t_word *prompt);
+void	close_sentence_fd(t_word *prompt);
+void	bin_exec_pipe(t_word *prompt);
+void	close_fds(t_word *prompt);
+void	exec_pipe(t_word *prompt);
+void	wait_cmds(t_word *node);
+void	close_pipe(int *fd);
+int		executor(t_word **lst, t_list **env_lst);
+int	 	ft_pipe(t_word *prompt);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:12:04 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/12 04:26:57 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/12 04:36:43 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,7 +14,7 @@
 
 int	executor(t_word **lst, t_list **env_lst)
 {
-	t_word		*prompt;
+	t_word	*prompt;
 
 	prompt = *lst;
 	ft_pipe(prompt);
