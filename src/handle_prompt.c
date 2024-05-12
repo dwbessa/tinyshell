@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 15:21:23 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/12 04:30:22 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,12 +21,13 @@ void	handle_prompt(t_data *data)
 	tokenize_prompt(&data->prompt);
 	expand_prompt(&data->prompt);
 	if (ft_strchr_int(data->raw_cmd, '|') == 1)
-	{
-		ft_multiple_commands(data);
+	{	
+		executor(&data->prompt, &data->env);
+		wait_cmds(data->prompt);
 	}
 	else if (!is_builtin(data))
 		exec_command(data);
-	print_word(&data->prompt);
+	//print_word(&data->prompt);
 	free_prompt(data->prompt);
 }
 
