@@ -22,14 +22,13 @@ void	exec_pipe(t_word *prompt)
 
 void	bin_exec_pipe(t_word *prompt)
 {
-	char		*cmd;
 	char		**mat;
 	char		**env_mat;
 
 	if (!prompt)
 		return ;
-	cmd = use_path(prompt->word, prompt->env);
-	if (!cmd)
+	prompt->word = use_path(prompt->word, prompt->env);
+	if (!prompt->word)
 		exit(127);
 	if (prompt->fd_out != STDOUT_FILENO)
 		dup2(prompt->fd_out, STDOUT_FILENO);
@@ -38,7 +37,7 @@ void	bin_exec_pipe(t_word *prompt)
 	close_fds(prompt->head);
 	mat = transform_list(prompt);
 	env_mat = env_to_matrix(prompt->env);
-	execve(cmd, mat, env_mat);
+	execve(prompt->word, mat, env_mat);
 	return ;
 }
 
