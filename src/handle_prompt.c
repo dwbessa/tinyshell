@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/13 01:17:34 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:51:48 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,8 +15,8 @@
 void	handle_prompt(t_data *data)
 {
 	add_history(data->raw_cmd);
-	if (!quote_number(data))
-		return (quote_error());
+	if (syntax_errors(data))
+		return ;
 	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
 	tokenize_prompt(&data->prompt);
 	expand_prompt(&data->prompt);
