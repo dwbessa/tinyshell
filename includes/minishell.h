@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/13 01:49:20 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:49:35 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -133,7 +133,9 @@ void	close_pipe(int *fd);
 int		executor(t_data *data, int have_pipe);
 int	 	ft_pipe(t_word *prompt);
 
-int redir_in(t_word *node);
-int	do_redir(t_word *node);
+int redir_in(t_word *prompt);
+int	do_redir(t_word *prompt);
+int redir_out(t_word *prompt);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 00:52:48 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/13 01:23:54 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:01:58 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,12 +16,13 @@ int	do_redir(t_word *prompt)
 {
 	if (!prompt)
 		return (0);
-	if (redir_in(prompt))
+	if (redir_in(prompt) || redir_out(prompt))
 		return (-1);
 	return (0);
 }
 
-int redir_in(t_word *prompt) {
+int redir_in(t_word *prompt) 
+{
     t_word *head = prompt;
     int fd_in;
     
@@ -42,6 +43,29 @@ int redir_in(t_word *prompt) {
                 printf("Error: No such file as '%s'\n", prompt->next->word);
                 return -1;
             }
+        }
+        prompt = prompt->next;
+    }
+    return 0; 
+}
+
+int redir_out(t_word *prompt) 
+{
+    t_word *head = prompt;
+    int fd_out;
+    
+    while (head && head->flag != MS_WORD)
+        head = head->next;
+    while (prompt && prompt->flag != MS_PIPE) 
+    {
+        if (prompt->flag == MS_REDIRECT_OUT) 
+        {
+            fd_out = open(prompt->next->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (fd_out == -1) {
+                perror("open");
+                return -1;
+            }
+            head->fd_out = fd_out;
         }
         prompt = prompt->next;
     }
