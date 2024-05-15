@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 01:56:49 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 02:26:08 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:32:17 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,7 +16,7 @@ int	append(t_word *prompt)
 {
 	t_word	*head;
 	int		fd_out;
-	
+
 	head = prompt;
 	while (head && head->flag != MS_WORD)
 		head = head->next;
@@ -25,8 +25,9 @@ int	append(t_word *prompt)
 		if (prompt->flag == MS_APPEND)
 		{
 			fd_out = open(prompt->next->word, O_WRONLY
-					|  O_APPEND | O_CREAT, 0644);
-			if (fd_out == (-1)) {
+					| O_APPEND | O_CREAT, 0644);
+			if (fd_out == (-1))
+			{
 				perror("open");
 				return (-1);
 			}
@@ -34,5 +35,5 @@ int	append(t_word *prompt)
 		}
 		prompt = prompt->next;
 	}
-	return 0;
+	return (0);
 }
