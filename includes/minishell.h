@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/14 15:45:53 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 00:31:35 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -78,7 +78,7 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
-int				syntax_errors(t_data *data);
+int	syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				quote_number(t_data *data);
 int				exec_command(t_data *data);
@@ -123,19 +123,22 @@ void			tokenize_prompt(t_word **prompt);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
 
-t_word	*get_next_command_pipe(t_word *prompt);
-void	close_sentence_fd(t_word *prompt);
-void	bin_exec_pipe(t_word *prompt);
-void	close_fds(t_word *prompt);
-void	exec_pipe(t_word *prompt);
-void	wait_cmds(t_word *node);
-void	close_pipe(int *fd);
-int		executor(t_data *data, int have_pipe);
-int	 	ft_pipe(t_word *prompt);
+t_word			*get_next_command_pipe(t_word *prompt);
+void			close_sentence_fd(t_word *prompt);
+void			bin_exec_pipe(t_word *prompt);
+void			close_fds(t_word *prompt);
+void			exec_pipe(t_word *prompt);
+void			wait_cmds(t_word *node);
+void				close_pipe(int *fd);
+int				executor(t_data *data, int have_pipe);
+int	 			ft_pipe(t_word *prompt);
 
-int redir_in(t_word *prompt);
-int	do_redir(t_word *prompt);
-int redir_out(t_word *prompt);
-int append(t_word *prompt);
+int			redir_in(t_word *prompt);
+int			do_redir(t_word *prompt);
+int			redir_out(t_word *prompt);
+int			append(t_word *prompt);
+int			heredoc(t_word *prompt);
+void 		heredoc_loop(char *line, t_word *prompt, int *fd);
+
 
 #endif
