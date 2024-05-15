@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_number.c                                     :+:      :+:    :+:   */
+/*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 09:05:16 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/05 16:58:28 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/15 02:10:03 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -38,7 +38,7 @@ int	quote_number(t_data *data)
 
 void	quote_error(void)
 {
-    extern unsigned int   g_exit_status;
+	extern unsigned int	g_exit_status;
 
 	printf("minishell: syntax error: even number of quotes\n");
 	g_exit_status = 2;
