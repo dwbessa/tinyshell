@@ -37,7 +37,10 @@ void	bin_exec_pipe(t_word *prompt)
 	close_fds(prompt->head);
 	mat = transform_list(prompt);
 	env_mat = env_to_matrix(prompt->env);
-	execve(prompt->word, mat, env_mat);
+	if(execve(prompt->word, mat, env_mat) == -1)
+	{
+		exit(printf("minishell: command not found: %s\n", prompt->word));
+	}
 	return ;
 }
 
