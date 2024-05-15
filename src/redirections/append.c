@@ -1,27 +1,36 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_syntax_error.c                               :+:      :+:    :+:   */
+/*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 01:45:26 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 01:58:35 by aldantas         ###   ########.fr       */
+/*   Created: 2024/05/15 01:56:49 by aldantas          #+#    #+#             */
+/*   Updated: 2024/05/15 01:57:26 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-int syntax_errors(t_data *data)
+int append(t_word *prompt)
 {
-	if (!quote_number(data))
+	t_word *head = prompt;
+	int fd_out;
+	
+	while (head && head->flag != MS_WORD)
+		head = head->next;
+	while (prompt && prompt->flag != MS_PIPE) 
 	{
-		quote_error();
-		return (1);
+		if (prompt->flag == MS_APPEND)
+		{
+			fd_out = open(prompt->next->word, O_WRONLY |  O_APPEND | O_CREAT, 0644);
+			if (fd_out == -1) {
+				perror("open");
+				return -1;
+			}
+			head->fd_out = fd_out;
+		}
+		prompt = prompt->next;
 	}
-	if (check_pipe_syntax(data))
-	{
-		return (1);
-	}
-	return (0);
+	return 0; 
 }

@@ -1,28 +1,18 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 00:52:48 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 01:47:28 by aldantas         ###   ########.fr       */
+/*   Created: 2024/05/15 01:53:55 by aldantas          #+#    #+#             */
+/*   Updated: 2024/05/15 01:57:23 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-int	do_redir(t_word *prompt)
-{
-	if (!prompt)
-		return (0);
-	if (redir_in(prompt) || redir_out(prompt) 
-		|| append(prompt))
-		return (-1);
-	return (0);
-}
-
-int redir_in_loop(t_word *prompt, t_word *head, int fd_in)
+static int redir_in_loop(t_word *prompt, t_word *head, int fd_in)
 {
 	while (prompt && prompt->flag != MS_PIPE) 
 	{
@@ -61,51 +51,5 @@ int redir_in(t_word *prompt)
 		head = head->next;
 	if (redir_in_loop(prompt, head, fd_in) == -1)
 		return (-1);
-	return 0; 
-}
-
-int redir_out(t_word *prompt) 
-{
-	t_word *head = prompt;
-	int fd_out;
-	
-	while (head && head->flag != MS_WORD)
-		head = head->next;
-	while (prompt && prompt->flag != MS_PIPE) 
-	{
-		if (prompt->flag == MS_REDIRECT_OUT) 
-		{
-			fd_out = open(prompt->next->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd_out == -1) {
-				perror("open");
-				return -1;
-			}
-			head->fd_out = fd_out;
-		}
-		prompt = prompt->next;
-	}
-	return 0; 
-}
-
-int append(t_word *prompt)
-{
-	t_word *head = prompt;
-	int fd_out;
-	
-	while (head && head->flag != MS_WORD)
-		head = head->next;
-	while (prompt && prompt->flag != MS_PIPE) 
-	{
-		if (prompt->flag == MS_APPEND)
-		{
-			fd_out = open(prompt->next->word, O_WRONLY |  O_APPEND | O_CREAT, 0644);
-			if (fd_out == -1) {
-				perror("open");
-				return -1;
-			}
-			head->fd_out = fd_out;
-		}
-		prompt = prompt->next;
-	}
 	return 0; 
 }

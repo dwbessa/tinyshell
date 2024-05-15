@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/15 01:43:38 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 01:55:23 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -135,11 +135,8 @@ int	 			ft_pipe(t_word *prompt);
 
 int			do_redir(t_word *prompt);
 int			redir_in(t_word *prompt);
-int redir_in_loop(t_word *prompt, t_word *head, int fd_in);
 int			redir_out(t_word *prompt);
 int			append(t_word *prompt);
 int			heredoc(t_word *prompt);
-void 		heredoc_loop(char *line, t_word *prompt, int *fd);
-
 
 #endif
