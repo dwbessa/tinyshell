@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:12:04 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 00:31:42 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:24:14 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,7 +22,7 @@ int	executor(t_data *data, int have_pipe)
 	while (prompt)
 	{
 		if (do_redir(prompt) != 0)
-			return 1;
+			return (1);
 		if (have_pipe)
 			exec_pipe(prompt);
 		else if (!is_builtin(data))

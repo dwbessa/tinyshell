@@ -41,14 +41,14 @@ void	bin_exec_pipe(t_word *prompt)
 	return ;
 }
 
-int	 ft_pipe(t_word *prompt)
+int	ft_pipe(t_word *prompt)
 {
 	int		fd[2];
 	t_word	*cmd;
 
 	while (prompt)
 	{
-		while (prompt && prompt->flag != MS_PIPE && prompt->flag !=  MS_WORD)
+		while (prompt && prompt->flag != MS_PIPE && prompt->flag != MS_WORD)
 			prompt = prompt->next;
 		cmd = prompt;
 		while (prompt && prompt->flag != MS_PIPE)
