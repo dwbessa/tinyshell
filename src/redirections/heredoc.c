@@ -6,13 +6,13 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:46:57 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 01:57:24 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:35:16 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-static void heredoc_loop(char *line, t_word *prompt, int *fd)
+static void	heredoc_loop(char *line, t_word *prompt, int *fd)
 {
 	while (42)
 	{

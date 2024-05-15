@@ -6,13 +6,13 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 01:53:55 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 02:16:28 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:36:38 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-static int redir_in_loop(t_word *prompt, t_word *head, int fd_in)
+static int	redir_in_loop(t_word *prompt, t_word *head, int fd_in)
 {
 	while (prompt && prompt->flag != MS_PIPE)
 	{
@@ -41,10 +41,10 @@ static int redir_in_loop(t_word *prompt, t_word *head, int fd_in)
 	return (0);
 }
 
-int redir_in(t_word *prompt)
+int	redir_in(t_word *prompt)
 {
-	t_word *head;
-	int	fd_in;
+	t_word	*head;
+	int		fd_in;
 
 	fd_in = -1;
 	head = prompt;
