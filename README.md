@@ -1,9 +1,7 @@
 #Workplace DevAllan
 
-pipe funcionando, macetar redirect agor
+mudei a função de echo, agora tá funcionando esse builtin com redir,
+mas ta com um erro para corrigir -> a quebra de linha não tá passando para o arquivo redirecionado
 
-redirect input funcionando, tive que mudar o escopo da função de exec simples para dentro da função executor, pro redir funcionar nesses dois execs
 
-mudei o parametro da função executor de word para data, ja que tenho que execar os builtins dentro
-
-essa função tá com uma flag de pipe, vou tirar dps
+alguns builtins estão funcionando com pipe tbm
