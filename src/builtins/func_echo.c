@@ -1,55 +1,55 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 17:43:58 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/15 19:54:20 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
-void	without_argument(t_word *prompt)
+void	without_argument(t_word *node, t_word *prompt)
 {
-	while (prompt)
+	while (node && node->flag == MS_WORD)
 	{
-		printf("%s", prompt->word);
-		if (prompt->next)
-			printf(" ");
+		ft_putstr_fd(node->word, prompt->fd_out);
+		if (node->next && node->flag == MS_WORD)
+			ft_putchar_fd(' ', prompt->fd_out);
 		else
-			printf("\n");
-		prompt = prompt->next;
+			ft_putchar_fd('\n', prompt->fd_out);
+		node = node->next;
 	}
 }
 
 int	func_echo(t_word *prompt)
 {
 	extern unsigned int	g_exit_status;
-	t_word				*echo;
+	t_word				*node;
 
-	echo = prompt->head;
-	if (!echo->next)
+	node = prompt->head;
+	if (!node->next)
 	{
 		printf("\n");
 		return (1);
 	}
-	echo = echo->next;
-	if (!ft_strncmp(echo->word, "-n", 3))
+	node = node->next;
+	if (!ft_strncmp(node->word, "-n", 2))
 	{
-		echo = echo->next;
-		while (echo)
+		node = node->next;
+		while (node && node->flag == MS_WORD)
 		{
-			printf("%s", echo->word);
-			if (echo->next)
-				printf(" ");
-			echo = echo->next;
+			ft_putstr_fd(node->word, prompt->fd_out);
+			if (node->next && node->flag == MS_WORD)
+				ft_putchar_fd(' ', prompt->fd_out);
+			node = node->next;
 		}
 	}
 	else
-		without_argument(echo);
+		without_argument(node, prompt);
 	g_exit_status = 0;
 	return (1);
 }
