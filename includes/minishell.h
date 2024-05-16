@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/16 13:25:58 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:20:39 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -78,9 +78,12 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
+/* parsers */
+t_word			*get_last_word(t_word *prompt);
 int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				quote_number(t_data *data);
+
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);

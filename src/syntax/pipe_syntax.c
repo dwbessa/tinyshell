@@ -6,20 +6,31 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 01:40:23 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 02:37:08 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:22:43 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
+t_word	*get_last_word(t_word *prompt)
+{
+	while (prompt->next != NULL)
+		prompt = prompt->next;
+	return (prompt);
+}
+
 int	check_pipe_syntax(t_data *data)
 {
-	if (data->raw_cmd[0] == '|')
+	t_word	*prompt;
+
+	prompt = data->prompt;
+	if (prompt->flag == MS_PIPE)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (1);
 	}
-	if (data->raw_cmd[ft_strlen(data->raw_cmd) - 1] == '|')
+	prompt = get_last_word(prompt);
+	if (prompt->flag == MS_PIPE)
 	{
 		ft_putstr_fd("minishell: syntax error\n", 2);
 		return (1);
