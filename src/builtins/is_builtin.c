@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:10:01 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/16 13:18:49 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:27:12 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,7 +20,7 @@ int	is_builtin(t_data *data)
 	prompt = data->prompt->head;
 	builtin = 0;
 	if (!ft_strncmp(prompt->word, "pwd", 4))
-		builtin = func_pwd();
+		builtin = func_pwd(prompt);
 	else if (!ft_strncmp(prompt->word, "cd", 3))
 		builtin = func_cd(data->prompt);
 	else if (!ft_strncmp(prompt->word, "echo", 5))

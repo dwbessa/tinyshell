@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/16 13:17:00 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:25:58 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -84,7 +84,7 @@ int				quote_number(t_data *data);
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
-int				func_pwd(void);
+int				func_pwd(t_word *prompt);
 int				func_cd(t_word *prompt);
 int				func_echo(t_word *prompt);
 int				func_env(t_list *env, t_word *prompt);
