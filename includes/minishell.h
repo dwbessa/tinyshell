@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/15 17:35:18 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:17:00 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -78,7 +78,7 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
-int	syntax_errors(t_data *data);
+int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				quote_number(t_data *data);
 int				exec_command(t_data *data);
@@ -87,7 +87,7 @@ int				is_builtin(t_data *data);
 int				func_pwd(void);
 int				func_cd(t_word *prompt);
 int				func_echo(t_word *prompt);
-int				func_env(t_list *env);
+int				func_env(t_list *env, t_word *prompt);
 int				func_export(t_word *prompt, t_list *env);
 int				func_unset(t_word *prompt, t_list **env);
 
@@ -133,10 +133,10 @@ void				close_pipe(int *fd);
 int				executor(t_data *data, int have_pipe);
 int	 			ft_pipe(t_word *prompt);
 
-int			do_redir(t_word *prompt);
-int			redir_in(t_word *prompt);
-int			redir_out(t_word *prompt);
-int			append(t_word *prompt);
-int			heredoc(t_word *prompt);
+int				do_redir(t_word *prompt);
+int				redir_in(t_word *prompt);
+int				redir_out(t_word *prompt);
+int				append(t_word *prompt);
+int				heredoc(t_word *prompt);
 
 #endif

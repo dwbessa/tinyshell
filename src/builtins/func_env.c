@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   func_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:47:10 by dbessa            #+#    #+#             */
-/*   Updated: 2024/04/10 15:24:26 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:17:16 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -35,7 +35,7 @@ t_list	*get_env_lst(void)
 	return (env);
 }
 
-int	func_env(t_list *env)
+int	func_env(t_list *env, t_word *prompt)
 {
 	extern unsigned int	g_exit_status;
 
@@ -43,7 +43,7 @@ int	func_env(t_list *env)
 		return (1);
 	while (env != NULL)
 	{
-		ft_putendl_fd(env->content, 1);
+		ft_putendl_fd(env->content, prompt->fd_out);
 		env = env->next;
 	}
 	g_exit_status = 0;

@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:10:01 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/15 17:26:52 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:18:49 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -26,7 +26,7 @@ int	is_builtin(t_data *data)
 	else if (!ft_strncmp(prompt->word, "echo", 5))
 		builtin = func_echo(data->prompt);
 	else if (!ft_strncmp(prompt->word, "env", 4))
-		builtin = func_env(prompt->env);
+		builtin = func_env(prompt->env, prompt);
 	else if (!ft_strncmp(prompt->word, "exit", 5))
 		func_exit(data);
 	else if (!ft_strncmp(prompt->word, "export", 7))

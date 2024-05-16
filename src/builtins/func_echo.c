@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:45:24 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/15 19:54:20 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:19:53 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,7 +17,7 @@ void	without_argument(t_word *node, t_word *prompt)
 	while (node && node->flag == MS_WORD)
 	{
 		ft_putstr_fd(node->word, prompt->fd_out);
-		if (node->next && node->flag == MS_WORD)
+		if (node->next && node->next->flag == MS_WORD)
 			ft_putchar_fd(' ', prompt->fd_out);
 		else
 			ft_putchar_fd('\n', prompt->fd_out);
@@ -37,7 +37,7 @@ int	func_echo(t_word *prompt)
 		return (1);
 	}
 	node = node->next;
-	if (!ft_strncmp(node->word, "-n", 2))
+	if (!ft_strncmp(node->word, "-n", 3))
 	{
 		node = node->next;
 		while (node && node->flag == MS_WORD)
