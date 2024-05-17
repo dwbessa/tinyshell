@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:21:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 16:16:15 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:40:47 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 	{
 		data.pwd = shell_name(data.env);
 		data.raw_cmd = readline(data.pwd);
-		if (data.raw_cmd == NULL || *data.raw_cmd == EOF)
+		if (!data.raw_cmd || *data.raw_cmd == EOF)
 			func_exit(&data);
 		if (data.raw_cmd && *data.raw_cmd)
 			handle_prompt(&data);

@@ -6,11 +6,22 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:11:30 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/17 16:24:46 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:06:27 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		has_pipe(t_word *prompt)
+{
+	while (prompt)
+	{
+		if (prompt->flag == MS_PIPE)
+			return (1);
+		prompt = prompt->next;
+	}
+	return (0);
+}
 
 void	close_pipe(int *fd)
 {
