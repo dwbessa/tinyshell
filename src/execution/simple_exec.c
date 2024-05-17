@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 16:32:31 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:40:48 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**env_to_matrix(t_list *env)
 	return (new_env);
 }
 
-static char	*transform_arg(char *arg, t_list *env)
+char	*transform_arg(char *arg, t_list *env)
 {
 	char	**all_path;
 	char	*path;

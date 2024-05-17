@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 16:33:54 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:44:10 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,20 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
+/* parsers */
+t_word			*get_last_word(t_word *prompt);
 int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
+int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
+
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
-int				func_pwd(void);
+int				func_pwd(t_word *prompt);
 int				func_cd(t_word *prompt);
 int				func_echo(t_word *prompt);
-int				func_env(t_list *env);
+int				func_env(t_list *env, t_word *prompt);
 int				func_export(t_word *prompt, t_list *env);
 int				func_unset(t_word *prompt, t_list **env);
 
@@ -103,6 +107,14 @@ void			quote_error(void);
 void			expand_prompt(t_word **prompt);
 
 char			*shell_name(t_list *env);
+char			**transform_list(t_word *prompt);
+
+t_list			*get_env_lst(void);
+t_word			*tokenizer(t_data *data);
+unsigned int	give_token(char *word, int last_flag);
+void			print_word(t_word **prompt);
+void			free_prompt(t_word *prompt);
+t_word			*ms_lstnew(void *word);
 void			ms_lstadd_back(t_word **lst, t_word *new);
 t_list			*ms_create_env_lst(void);
 t_word			*ms_create_word_lst(char *line, t_list *env_lst);
@@ -119,12 +131,14 @@ void			bin_exec_pipe(t_word *prompt);
 void			close_fds(t_word *prompt);
 void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
-void			close_pipe(int *fd);
+void				close_pipe(int *fd);
 int				executor(t_data *data, int have_pipe);
-int				ft_pipe(t_word *prompt);
-int				redir_in(t_word *prompt);
+int	 			ft_pipe(t_word *prompt);
+
 int				do_redir(t_word *prompt);
+int				redir_in(t_word *prompt);
 int				redir_out(t_word *prompt);
 int				append(t_word *prompt);
+int				heredoc(t_word *prompt);
 
 #endif
