@@ -1,25 +1,20 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_syntax_error.c                               :+:      :+:    :+:   */
+/*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 01:45:26 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/17 02:26:07 by aldantas         ###   ########.fr       */
+/*   Created: 2024/05/17 02:08:22 by aldantas          #+#    #+#             */
+/*   Updated: 2024/05/17 02:08:46 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-int	syntax_errors(t_data *data)
+t_word	*get_last_word(t_word *prompt)
 {
-	if (!quote_number(data))
-	{
-		quote_error();
-		return (1);
-	}
-	if (check_pipe_syntax(data) || check_redir_syntax(data))
-		return (1);
-	return (0);
+	while (prompt->next != NULL)
+		prompt = prompt->next;
+	return (prompt);
 }
