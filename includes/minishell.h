@@ -6,9 +6,10 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 18:07:57 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:37:33 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -132,7 +133,7 @@ void			close_fds(t_word *prompt);
 void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
 void			close_pipe(int *fd);
-int				executor(t_data *data);
+int				executor(t_data *data, int flag);
 int				has_pipe(t_word *prompt);
 int	 			ft_pipe(t_word *prompt);
 

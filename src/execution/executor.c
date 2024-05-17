@@ -6,13 +6,13 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:12:04 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/17 18:07:47 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:27:47 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	executor(t_data *data)
+int	executor(t_data *data, int have_pipe)
 {
 	t_word	*prompt;
 
@@ -23,7 +23,7 @@ int	executor(t_data *data)
 	{
 		if (do_redir(prompt) != 0)
 			return (1);
-		if (has_pipe(prompt))
+		if (have_pipe)
 			exec_pipe(prompt);
 		else if (!is_builtin(data))
 			exec_command(data);

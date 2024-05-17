@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:19:50 by ldantas           #+#    #+#             */
-/*   Updated: 2024/05/17 16:33:00 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:27:29 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	bin_exec_pipe(t_word *prompt)
 	close_fds(prompt->head);
 	mat = transform_list(prompt);
 	env_mat = env_to_matrix(prompt->env);
-	if (execve(prompt->word, mat, env_mat) == -1)
+	if( execve(prompt->word, mat, env_mat) == -1)
 	{
 		printf("minishell: command not found: %s\n", prompt->word);
 		exit(127);
