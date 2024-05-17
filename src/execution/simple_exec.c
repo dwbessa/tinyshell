@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/13 01:16:35 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:32:31 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -89,7 +89,7 @@ static void	pid_zero(t_word *prompt, char **new_env)
 	if (execve(arg[0], arg, new_env) == -1)
 	{
 		if (errno == ENOENT)
-			printf("minishell: command not found: %s\n", arg[0]);
+			printf("%s: command not found\n", arg[0]);
 		else
 			printf("%s: %s\n", arg[0], strerror(errno));
 		free_matrix(arg);
