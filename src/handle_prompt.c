@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 18:36:13 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/17 10:26:17 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 void	handle_prompt(t_data *data)
 {
-	t_word	*prompt;
-	
 	add_history(data->raw_cmd);
-	if (!quote_number(data))
-		return (quote_error());
-	prompt = ms_create_word_lst(data->raw_cmd, data->env);
-	tokenize_prompt(&prompt);
-	expand_prompt(&prompt);
-	prompt->env = data->env;
-	data->prompt = prompt->head;
-	if (ft_strchr_int(data->raw_cmd, '|') == 1)
+	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	tokenize_prompt(&data->prompt);
+	if (syntax_errors(data))
 	{
-		ms_pipe(prompt);
-		ms_exec_pipe(prompt, &prompt->env);
-		//exec_all_commands(data);
+		free_prompt(data->prompt);
+		return ;
 	}
-	else if (!is_builtin(data))
-		exec_command(data);
-	print_word(&prompt);
-	free_prompt(prompt);
+	expand_prompt(&data->prompt);
+	if (ft_strchr_int(data->raw_cmd, '|') == 1)
+		executor(data, 1);
+	else
+		executor(data, 0);
+	wait_cmds(data->prompt);
+	// print_word(&data->prompt);
+	free_prompt(data->prompt);
 }
 
 void	tokenize_prompt(t_word	**prompt)

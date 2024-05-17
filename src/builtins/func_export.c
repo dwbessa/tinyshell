@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwbessa <dwbessa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:28:59 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/05 18:11:13 by dwbessa          ###   ########.fr       */
+/*   Updated: 2024/05/17 10:25:53 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*add_declare(void *content)
 	return (str_content);
 }
 
-void	sort_env(t_list *env)
+void	sort_env(t_list *env, t_word *prompt)
 {
 	t_list	*export_env;
 	t_list	*export_lst;
@@ -32,7 +32,7 @@ void	sort_env(t_list *env)
 	ft_sortlist(export_env, ft_strcmp);
 	export_lst = ft_lstmap(export_env, add_declare, free);
 	ft_lstclear(&export_env, free);
-	func_env(export_lst);
+	func_env(export_lst, prompt);
 	ft_lstclear(&export_lst, free);
 }
 
@@ -94,7 +94,7 @@ int	func_export(t_word *prompt, t_list *env)
 	export = prompt->head;
 	if (!export->next)
 	{
-		sort_env(env);
+		sort_env(env, prompt);
 		return (1);
 	}
 	export = export->next;

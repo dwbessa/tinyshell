@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/nfs/homes/aldantas/cursus42/42cursus_minishell/src/execution",
-      "program": "/nfs/homes/aldantas/cursus42/42cursus_minishell/src/execution/build/Debug/outDebug",
+      "cwd": "/nfs/homes/aldantas/cursus42/42cursus_minishell/src",
+      "program": "/nfs/homes/aldantas/cursus42/42cursus_minishell/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

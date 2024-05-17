@@ -6,7 +6,7 @@
 /*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 18:27:05 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/17 10:26:23 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_word
 typedef struct s_data
 {
 	t_list			*env;
+	int				status;
 	char			**envp;
 	char			*pwd;
 	char			*raw_cmd;
@@ -77,14 +78,20 @@ enum e_builtins
 	MS_EXIT = 16384,
 };
 
+/* parsers */
+t_word			*get_last_word(t_word *prompt);
+int				syntax_errors(t_data *data);
+int				check_pipe_syntax(t_data *data);
+int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
+
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
-int				func_pwd(void);
+int				func_pwd(t_word *prompt);
 int				func_cd(t_word *prompt);
 int				func_echo(t_word *prompt);
-int				func_env(t_list *env);
+int				func_env(t_list *env, t_word *prompt);
 int				func_export(t_word *prompt, t_list *env);
 int				func_unset(t_word *prompt, t_list **env);
 
@@ -102,6 +109,7 @@ void			expand_prompt(t_word **prompt);
 char			*shell_name(t_list *env);
 char			**transform_list(t_word *prompt);
 
+
 t_list			*get_env_lst(void);
 
 t_word			*tokenizer(t_data *data);
@@ -116,14 +124,23 @@ int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
-int				pipe_operator (t_data *data);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
-int				ms_pipe(t_word *node);
-void			ms_exec_pipe(t_word *node, t_list **env_lst);
-void			ms_bin_exec_pipe(t_word *node, t_list *env_lst);
-void			ms_close_pipe(int *fd);
-void			ms_close_all_fd(t_word *node);
-void			exec_all_commands(t_data *data);
+
+t_word			*get_next_command_pipe(t_word *prompt);
+void			close_sentence_fd(t_word *prompt);
+void			bin_exec_pipe(t_word *prompt);
+void			close_fds(t_word *prompt);
+void			exec_pipe(t_word *prompt);
+void			wait_cmds(t_word *node);
+void				close_pipe(int *fd);
+int				executor(t_data *data, int have_pipe);
+int	 			ft_pipe(t_word *prompt);
+
+int				do_redir(t_word *prompt);
+int				redir_in(t_word *prompt);
+int				redir_out(t_word *prompt);
+int				append(t_word *prompt);
+int				heredoc(t_word *prompt);
 
 #endif

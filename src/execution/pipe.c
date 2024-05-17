@@ -1,69 +1,98 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/10 14:51:10 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/10 14:58:10 by dbessa           ###   ########.fr       */
+/*   Created: 2024/05/12 2:19:50 by aldantas          #+#    #+#             */
+/*   Updated: 2024/05/12 04:30:12 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
-void	ms_exec_pipe(t_word *node, t_list **env_lst)
+void	exec_pipe(t_word *prompt)
 {
-	node->pid = fork();
-	if (node->pid != 0)
+	prompt->pid = fork();
+	if (prompt->pid != 0)
 		return ;
-	ms_bin_exec_pipe(node, *env_lst);
+	bin_exec_pipe(prompt);
 }
 
-int	ms_pipe(t_word *node)
+void	bin_exec_pipe(t_word *prompt)
+{
+	char		**mat;
+	char		**env_mat;
+
+	if (!prompt)
+		return ;
+	prompt->word = use_path(prompt->word, prompt->env);
+	if (!prompt->word)
+		exit(127);
+	if (prompt->fd_out != STDOUT_FILENO)
+		dup2(prompt->fd_out, STDOUT_FILENO);
+	if (prompt->fd_in != STDIN_FILENO)
+		dup2(prompt->fd_in, STDIN_FILENO);
+	close_fds(prompt->head);
+	mat = transform_list(prompt);
+	env_mat = env_to_matrix(prompt->env);
+	if(execve(prompt->word, mat, env_mat) == -1)
+	{
+		printf("minishell: command not found: %s\n", prompt->word);
+		exit(127);
+	}
+	return ;
+}
+
+int	ft_pipe(t_word *prompt)
 {
 	int		fd[2];
 	t_word	*cmd;
 
-	while (node)
+	while (prompt)
 	{
-		while (node && node->flag != MS_PIPE && node->flag != MS_WORD)
-			node = node->next;
-		cmd = node;
-		while (node && node->flag != MS_PIPE)
-			node = node->next;
-		if (!node)
+		while (prompt && prompt->flag != MS_PIPE && prompt->flag != MS_WORD)
+			prompt = prompt->next;
+		cmd = prompt;
+		while (prompt && prompt->flag != MS_PIPE)
+			prompt = prompt->next;
+		if (!prompt)
 			return (0);
 		if (pipe(fd) == -1)
 			return (1);
 		cmd->fd_out = fd[1];
-		node = node->next;
-		cmd = node;
+		prompt = prompt->next;
+		cmd = prompt;
 		while (cmd && cmd->flag != MS_PIPE && cmd->flag != MS_WORD)
 			cmd = cmd->next;
 		if (cmd)
 			cmd->fd_in = fd[0];
 		else
-			ms_close_pipe(fd);
+			close_pipe(fd);
 	}
 	return (0);
 }
 
-void	ms_close_pipe(int *fd)
+void	wait_cmds(t_word *node)
 {
-	close(fd[0]);
-	close(fd[1]);
-	return ;
-}
+	t_word				*aux;
+	extern unsigned int	g_exit_status;
 
-void	ms_close_all_fd(t_word *node)
-{
+	if (!node)
+		return ;
+	aux = node;
 	while (node)
 	{
-		if (node->fd_in != STDIN_FILENO)
-			close(node->fd_in);
-		else if (node->fd_out != STDOUT_FILENO)
-			close(node->fd_out);
+		if (node->pid != 0)
+			waitpid(node->pid, &node->ret, 0);
+		node = node->next;
+	}
+	node = aux;
+	while (node)
+	{
+		if (node->ret >= 0)
+			g_exit_status = WEXITSTATUS(node->ret);
 		node = node->next;
 	}
 	return ;
