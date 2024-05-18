@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 00:20:58 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:46:13 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void			expand_prompt(t_word **prompt);
 char			*shell_name(t_list *env);
 char			**transform_list(t_word *prompt);
 
-
 t_list			*get_env_lst(void);
 
 t_word			*tokenizer(t_data *data);
@@ -136,7 +135,7 @@ void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
 void			close_pipe(int *fd);
 int				executor(t_data *data);
-int	 			ft_pipe(t_word *prompt);
+int				ft_pipe(t_word *prompt);
 
 int				do_redir(t_word *prompt);
 int				redir_in(t_word *prompt);
