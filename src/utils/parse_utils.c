@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 00:02:29 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/18 00:20:45 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 01:45:19 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_all_space(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
