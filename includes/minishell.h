@@ -6,10 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 20:37:33 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:20:58 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -85,6 +84,7 @@ int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
+int				is_all_space(char *line);
 
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
@@ -110,7 +110,9 @@ void			expand_prompt(t_word **prompt);
 char			*shell_name(t_list *env);
 char			**transform_list(t_word *prompt);
 
+
 t_list			*get_env_lst(void);
+
 t_word			*tokenizer(t_data *data);
 unsigned int	give_token(char *word, int last_flag);
 void			print_word(t_word **prompt);
@@ -133,8 +135,7 @@ void			close_fds(t_word *prompt);
 void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
 void			close_pipe(int *fd);
-int				executor(t_data *data, int flag);
-int				has_pipe(t_word *prompt);
+int				executor(t_data *data);
 int	 			ft_pipe(t_word *prompt);
 
 int				do_redir(t_word *prompt);

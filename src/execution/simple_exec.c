@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 16:40:48 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:05:49 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**env_to_matrix(t_list *env)
 	return (new_env);
 }
 
-char	*transform_arg(char *arg, t_list *env)
+static char	*transform_arg(char *arg, t_list *env)
 {
 	char	**all_path;
 	char	*path;
@@ -89,7 +89,7 @@ static void	pid_zero(t_word *prompt, char **new_env)
 	if (execve(arg[0], arg, new_env) == -1)
 	{
 		if (errno == ENOENT)
-			printf("%s: command not found\n", arg[0]);
+			printf("minishell: command not found: %s\n", arg[0]);
 		else
 			printf("%s: %s\n", arg[0], strerror(errno));
 		free_matrix(arg);
