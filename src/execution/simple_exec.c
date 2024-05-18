@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:17:18 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 01:43:58 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:27:32 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,7 @@ static void	pid_zero(t_word *prompt, char **new_env)
 	char	**arg;
 
 	arg = transform_list(prompt);
-	if (prompt->fd_out != STDOUT_FILENO)
-		dup2(prompt->fd_out, STDOUT_FILENO);
-	if (prompt->fd_in != STDIN_FILENO)
-		dup2(prompt->fd_in, STDIN_FILENO);
+	redirect_stdio(prompt);
 	close_fds(prompt->head);
 	if (execve(arg[0], arg, new_env) == -1)
 	{

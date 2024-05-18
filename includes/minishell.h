@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 01:47:04 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:28:01 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
 
 t_word			*get_next_command_pipe(t_word *prompt);
+void			redirect_stdio(t_word *prompt);
 void			close_sentence_fd(t_word *prompt);
 void			bin_exec_pipe(t_word *prompt);
 void			close_fds(t_word *prompt);

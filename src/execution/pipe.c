@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:19:50 by ldantas           #+#    #+#             */
-/*   Updated: 2024/05/18 00:35:23 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:27:33 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	bin_exec_pipe(t_word *prompt)
 	prompt->word = use_path(prompt->word, prompt->env);
 	if (!prompt->word)
 		exit(127);
-	if (prompt->fd_out != STDOUT_FILENO)
-		dup2(prompt->fd_out, STDOUT_FILENO);
-	if (prompt->fd_in != STDIN_FILENO)
-		dup2(prompt->fd_in, STDIN_FILENO);
+	redirect_stdio(prompt);
 	close_fds(prompt->head);
 	mat = transform_list(prompt);
 	env_mat = env_to_matrix(prompt->env);

@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:11:30 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/18 01:43:57 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:27:57 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ void	close_pipe(int *fd)
 	close(fd[0]);
 	close(fd[1]);
 	return ;
+}
+
+void	redirect_stdio(t_word *prompt) 
+{
+	if (prompt->fd_out != STDOUT_FILENO)
+		dup2(prompt->fd_out, STDOUT_FILENO);
+	if (prompt->fd_in != STDIN_FILENO)
+		dup2(prompt->fd_in, STDIN_FILENO);
 }
 
 void	close_sentence_fd(t_word *prompt)
