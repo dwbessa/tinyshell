@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 00:46:13 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 01:23:49 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ enum e_builtins
 
 /* parsers */
 t_word			*get_last_word(t_word *prompt);
+int				parse_quotes(t_data *data);
 int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
 int				is_all_space(char *line);
 
+int				parse_prompt(t_data *data);
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
 int				is_builtin(t_data *data);
