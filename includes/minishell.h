@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 23:54:54 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:20:58 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -84,6 +84,7 @@ int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
+int				is_all_space(char *line);
 
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);

@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
@@ -6,15 +6,16 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 23:55:19 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:19:35 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_prompt(t_data *data)
 {
-	add_history(data->raw_cmd);
+	if (!is_all_space(data->raw_cmd))
+		add_history(data->raw_cmd);
 	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
 	if(!data->prompt)
 		return ;
