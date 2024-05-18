@@ -6,19 +6,21 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:12:04 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/15 17:35:19 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/17 23:57:40 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "minishell.h"
 
-int	executor(t_data *data, int have_pipe)
+int	executor(t_data *data)
 {
 	t_word	*prompt;
+	int		have_pipe;
 
 	prompt = data->prompt;
 	ft_pipe(prompt);
 	prompt->env = data->env;
+	have_pipe = ft_strchr_int(data->raw_cmd, '|');
 	while (prompt)
 	{
 		if (do_redir(prompt) != 0)

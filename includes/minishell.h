@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 10:26:23 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/17 23:54:54 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -133,8 +133,8 @@ void			bin_exec_pipe(t_word *prompt);
 void			close_fds(t_word *prompt);
 void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
-void				close_pipe(int *fd);
-int				executor(t_data *data, int have_pipe);
+void			close_pipe(int *fd);
+int				executor(t_data *data);
 int	 			ft_pipe(t_word *prompt);
 
 int				do_redir(t_word *prompt);

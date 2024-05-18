@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   handle_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
+/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/17 10:26:17 by dbessa           ###   ########.fr       */
+/*   Updated: 2024/05/17 23:55:19 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -16,6 +16,8 @@ void	handle_prompt(t_data *data)
 {
 	add_history(data->raw_cmd);
 	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	if(!data->prompt)
+		return ;
 	tokenize_prompt(&data->prompt);
 	if (syntax_errors(data))
 	{
@@ -23,12 +25,8 @@ void	handle_prompt(t_data *data)
 		return ;
 	}
 	expand_prompt(&data->prompt);
-	if (ft_strchr_int(data->raw_cmd, '|') == 1)
-		executor(data, 1);
-	else
-		executor(data, 0);
+	executor(data);
 	wait_cmds(data->prompt);
-	// print_word(&data->prompt);
 	free_prompt(data->prompt);
 }
 
