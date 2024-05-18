@@ -1,7 +1,8 @@
 #Workplace DevAllan
 
-mudei a função de echo, agora tá funcionando esse builtin com redir,
-mas ta com um erro para corrigir -> a quebra de linha não tá passando para o arquivo redirecionado
+corrigi o bug dos espaços no terminal;
 
+refatorei a função handle prompt para ficar mais legivel o codigo;
 
-alguns builtins estão funcionando com pipe tbm
+mudei o nome da pasta syntax para parsers, e adicionei as funções parser_prompt e parser_quotes pq a função de 
+quotes precisava vir antes do tokenize e expand prompt;
