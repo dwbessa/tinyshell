@@ -24,6 +24,9 @@ $(NAME): $(LIBFT) $(OBJ)
 		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT)  -o $(NAME) \
 			$(READLINE_FLAGS)
 
+leak:
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supressions.supp -s ./minishell
+
 clean: 
 		@make clean -C libft
 		${RM} ${OBJ}
@@ -36,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re leak
