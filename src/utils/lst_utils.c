@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:34:11 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/18 01:43:58 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/19 01:18:41 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_word	*ms_lstnew(void *word)
 	new->fd_out = 1;
 	new->ret = -1;
 	new->next = NULL;
+	new->env = NULL;
+	new->head = NULL;
 	return (new);
 }
 

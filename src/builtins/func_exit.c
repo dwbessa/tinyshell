@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 10:57:03 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 00:33:02 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/19 01:36:44 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	func_exit(t_data *data)
 		ft_lstclear(&data->env, free);
 		exit(EXIT_SUCCESS);
 	}
+	free_prompt(data->prompt);
 	free(data->raw_cmd);
 	free(data->pwd);
 	ft_lstclear(&data->env, free);
