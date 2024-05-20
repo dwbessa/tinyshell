@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/20 16:30:31 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:54:06 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ enum e_builtins
 };
 
 /* parsers */
-void	remove_quotes_all_prompt(t_word *prompt);
-char	*remove_quotes2(char *line);
+void			remove_quotes_all_prompt(t_word *prompt);
+char			*remove_quotes2(char *line);
 t_word			*get_last_word(t_word *prompt);
 int				parse_quotes(t_data *data);
 int				syntax_errors(t_data *data);

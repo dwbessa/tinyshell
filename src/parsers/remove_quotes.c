@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:04:01 by aldantas          #+#    #+#             */
-/*   Updated: 2024/05/20 16:40:00 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:23:02 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static int	count_chars(char *line)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] != '\'' && line[i] != '\"')
 			count++;
@@ -54,7 +54,7 @@ void	remove_quotes_all_prompt(t_word *prompt)
 	char	*temp;
 
 	temp = NULL;
-	while(prompt)
+	while (prompt)
 	{
 		temp = prompt->word;
 		prompt->word = remove_quotes2(prompt->word);
