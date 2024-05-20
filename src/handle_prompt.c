@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:41:11 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 02:24:02 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:30:59 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_prompt(t_data *data)
 		return ;
 	if (!parse_prompt(data))
 		return ;
+	remove_quotes_all_prompt(data->prompt);
 	executor(data);
 	wait_cmds(data->prompt);
 	free_prompt(data->prompt);
