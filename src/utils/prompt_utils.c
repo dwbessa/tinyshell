@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
+/*   By: dbessa <dbessa@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:17:35 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/18 00:33:31 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:43:10 by dbessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*get_user(t_list *env, char *output)
 			break ;
 		}
 		env = env->next;
+		if (!env)
+			output =  ft_strjoin(output, "marvin");
 	}
 	return (output);
 }
