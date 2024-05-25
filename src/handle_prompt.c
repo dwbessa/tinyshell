@@ -28,7 +28,7 @@ int	parse_prompt(t_data *data)
 {
 	if (!is_all_space(data->raw_cmd))
 		add_history(data->raw_cmd);
-	data->prompt = ms_create_word_lst(data->raw_cmd, data->env);
+	data->prompt = create_word_lst(data->raw_cmd, data->env);
 	if (!data->prompt)
 		return (0);
 	tokenize_prompt(&data->prompt);

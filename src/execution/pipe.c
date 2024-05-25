@@ -71,26 +71,26 @@ int	ft_pipe(t_word *prompt)
 	return (0);
 }
 
-void	wait_cmds(t_word *node)
+void	wait_cmds(t_word *prompt)
 {
 	t_word				*aux;
 	extern unsigned int	g_exit_status;
 
-	if (!node)
+	if (!prompt)
 		return ;
-	aux = node;
-	while (node)
+	aux = prompt;
+	while (prompt)
 	{
-		if (node->pid != 0)
-			waitpid(node->pid, &node->ret, 0);
-		node = node->next;
+		if (prompt->pid != 0)
+			waitpid(prompt->pid, &prompt->ret, 0);
+		prompt= prompt->next;
 	}
-	node = aux;
-	while (node)
+	prompt= aux;
+	while (prompt)
 	{
-		if (node->ret >= 0)
-			g_exit_status = WEXITSTATUS(node->ret);
-		node = node->next;
+		if (prompt->ret >= 0)
+			g_exit_status = WEXITSTATUS(prompt->ret);
+		prompt= prompt->next;
 	}
 	return ;
 }

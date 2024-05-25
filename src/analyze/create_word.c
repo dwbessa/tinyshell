@@ -14,7 +14,7 @@
 
 static void	ms_head_init(t_word *head);
 
-t_word	*ms_create_word_lst(char *line, t_list *env_lst)
+t_word	*create_word_lst(char *line, t_list *env_lst)
 {
 	int		word_len;
 	t_word	*new_word;

@@ -79,16 +79,22 @@ enum e_builtins
 };
 
 /* parsers */
+unsigned int	give_token(char *word, int last_flag);
 void			remove_quotes_all_prompt(t_word *prompt);
 char			*remove_quotes2(char *line);
-t_word			*get_last_word(t_word *prompt);
 int				parse_quotes(t_data *data);
 int				syntax_errors(t_data *data);
 int				check_pipe_syntax(t_data *data);
 int				check_redir_syntax(t_data *data);
 int				quote_number(t_data *data);
 int				is_all_space(char *line);
-
+int				executor(t_data *data);
+int				ft_pipe(t_word *prompt);
+int				do_redir(t_word *prompt);
+int				redir_in(t_word *prompt);
+int				redir_out(t_word *prompt);
+int				append(t_word *prompt);
+int				heredoc(t_word *prompt);
 int				parse_prompt(t_data *data);
 int				exec_command(t_data *data);
 int				many_char(char *s, char c);
@@ -111,22 +117,15 @@ void			quote_error(void);
 void			expand_prompt(t_word **prompt);
 char			*shell_name(t_list *env);
 char			**transform_list(t_word *prompt);
-t_list			*get_env_lst(void);
-t_word			*tokenizer(t_data *data);
-unsigned int	give_token(char *word, int last_flag);
 void			print_word(t_word **prompt);
 void			free_prompt(t_word *prompt);
-t_word			*ms_lstnew(void *word);
 void			ms_lstadd_back(t_word **lst, t_word *new);
-t_list			*ms_create_env_lst(void);
-t_word			*ms_create_word_lst(char *line, t_list *env_lst);
 int				get_word_len(char *line);
 int				ms_ismeta(char *c);
 int				ms_find_next_quotes(char *line);
 void			tokenize_prompt(t_word **prompt);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
-t_word			*get_next_command_pipe(t_word *prompt);
 void			redirect_stdio(t_word *prompt);
 void			close_sentence_fd(t_word *prompt);
 void			bin_exec_pipe(t_word *prompt);
@@ -134,12 +133,12 @@ void			close_fds(t_word *prompt);
 void			exec_pipe(t_word *prompt);
 void			wait_cmds(t_word *node);
 void			close_pipe(int *fd);
-int				executor(t_data *data);
-int				ft_pipe(t_word *prompt);
-int				do_redir(t_word *prompt);
-int				redir_in(t_word *prompt);
-int				redir_out(t_word *prompt);
-int				append(t_word *prompt);
-int				heredoc(t_word *prompt);
+t_list			*get_env_lst(void);
+t_list			*ms_create_env_lst(void);
+t_word			*ms_lstnew(void *word);
+t_word			*get_last_word(t_word *prompt);
+t_word			*tokenizer(t_data *data);
+t_word			*create_word_lst(char *line, t_list *env_lst);
+t_word			*get_next_command_pipe(t_word *prompt);
 
 #endif
