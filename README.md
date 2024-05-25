@@ -11,7 +11,6 @@ make && ./minishell
 
  We had to incorporate the following features:
 - Display a promt while waiting for a new commmand.
-- Display a promt while waiting for a new commmand.
 - Have a working history.
 - Find and launch executables (using the `PATH` variable or an absolute path).
 - Handle `'` (single) and `"` (double) **quotes** like in bash.
