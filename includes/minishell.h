@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/20 16:54:06 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:18:13 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -36,11 +36,11 @@
 typedef struct s_word
 {
 	char			*word;
-	unsigned int	flag;
 	int				fd_in;
 	int				fd_out;
-	int				ret;
+	int				status;
 	pid_t			pid;
+	unsigned int	flag;
 	struct s_word	*head;
 	struct s_list	*env;
 	struct s_word	*next;
@@ -58,24 +58,24 @@ typedef struct s_data
 
 enum e_token
 {
-	MS_WORD = 1,
-	MS_PIPE = 2,
-	MS_REDIRECT_IN = 4,
-	MS_REDIRECT_OUT = 8,
-	MS_REDIRECT_FILE = 16,
-	MS_APPEND = 32,
-	MS_HEREDOC = 64,
+	MS_WORD,
+	MS_PIPE,
+	MS_REDIRECT_IN,
+	MS_REDIRECT_OUT,
+	MS_REDIRECT_FILE,
+	MS_APPEND,
+	MS_HEREDOC,
 };
 
 enum e_builtins
 {
-	MS_ECHO = 256,
-	MS_CD = 512,
-	MS_PWD = 1024,
-	MS_EXPORT = 2048,
-	MS_UNSET = 4096,
-	MS_ENV = 8192,
-	MS_EXIT = 16384,
+	MS_ECHO,
+	MS_CD,
+	MS_PWD,
+	MS_EXPORT,
+	MS_UNSET,
+	MS_ENV,
+	MS_EXIT,
 };
 
 /* parsers */

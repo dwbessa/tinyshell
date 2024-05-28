@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 02:19:50 by ldantas           #+#    #+#             */
-/*   Updated: 2024/05/18 18:27:33 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:22:16 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -49,8 +49,6 @@ int	ft_pipe(t_word *prompt)
 
 	while (prompt)
 	{
-		while (prompt && prompt->flag != MS_PIPE && prompt->flag != MS_WORD)
-			prompt = prompt->next;
 		cmd = prompt;
 		while (prompt && prompt->flag != MS_PIPE)
 			prompt = prompt->next;
@@ -61,8 +59,6 @@ int	ft_pipe(t_word *prompt)
 		cmd->fd_out = fd[1];
 		prompt = prompt->next;
 		cmd = prompt;
-		while (cmd && cmd->flag != MS_PIPE && cmd->flag != MS_WORD)
-			cmd = cmd->next;
 		if (cmd)
 			cmd->fd_in = fd[0];
 		else
@@ -82,14 +78,14 @@ void	wait_cmds(t_word *prompt)
 	while (prompt)
 	{
 		if (prompt->pid != 0)
-			waitpid(prompt->pid, &prompt->ret, 0);
+			waitpid(prompt->pid, &prompt->status, 0);
 		prompt= prompt->next;
 	}
 	prompt= aux;
 	while (prompt)
 	{
-		if (prompt->ret >= 0)
-			g_exit_status = WEXITSTATUS(prompt->ret);
+		if (prompt->status >= 0)
+			g_exit_status = WEXITSTATUS(prompt->status);
 		prompt= prompt->next;
 	}
 	return ;

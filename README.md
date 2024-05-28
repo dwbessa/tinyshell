@@ -3,11 +3,7 @@
 
 As beautiful as a shell!
 
-### install && Usages:
-  ```Bash
-git clone git@github.com:dwbessa/42cursus_minishell.git && cd 42cursus_minishell
-make && ./minishell
-  ```
+
 
  ### We had to incorporate the following features:
 - Display a promt while waiting for a new commmand.
