@@ -8,7 +8,7 @@ As beautiful as a shell!
 git clone git@github.com:dwbessa/42cursus_minishell.git && cd 42cursus_minishell
   ```
 
-### Usages:
+### Usage:
 ```Bash
 make && ./minishell
   ```
