@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   create_word.c                                      :+:      :+:    :+:   */
@@ -6,13 +6,16 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:28:40 by dwbessa           #+#    #+#             */
-/*   Updated: 2024/05/18 00:32:57 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:38:37 by aldantas         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
-static void	ms_head_init(t_word *head);
+static int	find_next_quotes(char *line);
+static void	head_init(t_word *head);
+static int	ismeta(char *c);
+static int	get_word_len(char *line);
 
 t_word	*create_word_lst(char *line, t_list *env_lst)
 {
@@ -35,23 +38,23 @@ t_word	*create_word_lst(char *line, t_list *env_lst)
 		while (ft_isspace(*line))
 			line++;
 	}
-	ms_head_init(word_lst);
+	head_init(word_lst);
 	return (word_lst);
 }
 
-int	get_word_len(char *line)
+static int	get_word_len(char *line)
 {
 	int	word_len;
 
-	if (ms_ismeta(line))
-		return (ms_ismeta(line));
+	if (ismeta(line))
+		return (ismeta(line));
 	word_len = 0;
-	while (*line && !ms_ismeta(line) && !ft_isspace(*line))
+	while (*line && !ismeta(line) && !ft_isspace(*line))
 	{
 		if (*line == '\'' || *line == '\"')
 		{
-			word_len += ms_find_next_quotes(line) + 1;
-			line += ms_find_next_quotes(line) + 1;
+			word_len += find_next_quotes(line) + 1;
+			line += find_next_quotes(line) + 1;
 		}
 		else
 		{
@@ -62,7 +65,7 @@ int	get_word_len(char *line)
 	return (word_len);
 }
 
-int	ms_ismeta(char *c)
+static int	ismeta(char *c)
 {
 	if ((c[0] == '<' && c[1] == '<') || (c[0] == '>' && c[1] == '>'))
 		return (2);
@@ -71,7 +74,7 @@ int	ms_ismeta(char *c)
 	return (0);
 }
 
-int	ms_find_next_quotes(char *line)
+static int	find_next_quotes(char *line)
 {
 	char	quote;
 	int		next_quote_distance;
@@ -91,7 +94,7 @@ int	ms_find_next_quotes(char *line)
 	return (next_quote_distance);
 }
 
-static void	ms_head_init(t_word *head)
+static void	head_init(t_word *head)
 {
 	t_word	*aux;
 

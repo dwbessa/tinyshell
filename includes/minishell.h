@@ -6,7 +6,7 @@
 /*   By: aldantas <aldantas@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:08:00 by dbessa            #+#    #+#             */
-/*   Updated: 2024/05/28 12:18:13 by aldantas         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:37:45 by aldantas         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -120,9 +120,7 @@ char			**transform_list(t_word *prompt);
 void			print_word(t_word **prompt);
 void			free_prompt(t_word *prompt);
 void			ms_lstadd_back(t_word **lst, t_word *new);
-int				get_word_len(char *line);
-int				ms_ismeta(char *c);
-int				ms_find_next_quotes(char *line);
+// int				get_word_len(char *line);
 void			tokenize_prompt(t_word **prompt);
 char			*use_path(char *arg, t_list *env);
 char			**env_to_matrix(t_list *env);
@@ -139,6 +137,6 @@ t_word			*ms_lstnew(void *word);
 t_word			*get_last_word(t_word *prompt);
 t_word			*tokenizer(t_data *data);
 t_word			*create_word_lst(char *line, t_list *env_lst);
-t_word			*get_next_command_pipe(t_word *prompt);
+t_word			*next_command_pipe(t_word *prompt);
 
 #endif
