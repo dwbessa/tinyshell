@@ -24,12 +24,12 @@ objs:
 
 $(OBJ): objs/%.o: src/%.c | objs
 		@mkdir -p $(dir $@)
-		$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+		$(SILENT) $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)
 		$(SILENT) $(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT)  -o $(NAME) \
 			$(READLINE_FLAGS)
-		@echo "✅ $(BLINK)$(COLOR_GREEN)Philosophers is ready!$(COLOR_RESET)"
+		@echo "✅ $(BLINK)$(COLOR_GREEN)Minishell is ready!$(COLOR_RESET)"
 
 leak:
 		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supressions.supp -s ./minishell
