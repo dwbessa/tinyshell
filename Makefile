@@ -7,6 +7,12 @@ CFLAGS		= -Wall -Werror -Wextra -g
 READLINE_FLAGS	= -lreadline
 INCLUDE		= -I includes/
 RM = rm -rf
+SILENT		= @
+COLOR_RESET	= \033[0m
+COLOR_GREEN	= \033[32m
+COLOR_YELLOW	= \033[33m
+COLOR_RED	= \033[31m
+BLINK		= \033[5m
 
 all:	$(NAME) 
 
@@ -21,21 +27,24 @@ $(OBJ): objs/%.o: src/%.c | objs
 		$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)
-		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT)  -o $(NAME) \
+		$(SILENT) $(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT)  -o $(NAME) \
 			$(READLINE_FLAGS)
+		@echo "✅ $(BLINK)$(COLOR_GREEN)Philosophers is ready!$(COLOR_RESET)"
 
 leak:
 		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supressions.supp -s ./minishell
 
 clean: 
-		@make clean -C libft
-		${RM} ${OBJ}
+		$(SILENT) @make clean -C libft
+		$(SILENT) ${RM} ${OBJ}
 		@rm -rf objs
+		@echo "👀 $(COLOR_YELLOW)Cleaned up object files$(COLOR_RESET)"
 
 fclean: clean
-		@make fclean -C libft
-		${RM} $(NAME)
-		${RM} $(LIBFT)
+		$(SILENT) @make fclean -C libft
+		$(SILENT) ${RM} $(NAME)
+		$(SILENT) ${RM} $(LIBFT)
+		@echo "🔥 $(COLOR_RED)Removed $(NAME) executable$(COLOR_RESET)"
 
 re: fclean all
 
