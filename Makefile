@@ -26,7 +26,7 @@ $(OBJ): objs/%.o: src/%.c | objs
 		@mkdir -p $(dir $@)
 		$(SILENT) $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(SILENT) $(LIBFT) $(OBJ)
 		$(SILENT) $(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT)  -o $(NAME) \
 			$(READLINE_FLAGS)
 		@echo "✅ $(BLINK)$(COLOR_GREEN)Minishell is ready!$(COLOR_RESET)"
