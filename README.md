@@ -1,5 +1,5 @@
 
-# Minishell - 42Rio
+# Minishell
 
 As beautiful as a shell!
 
