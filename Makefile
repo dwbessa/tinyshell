@@ -1,4 +1,4 @@
-NAME		= minishell
+NAME		= tinyshell
 LIBFT		= libft/libft.a
 SRC 		= $(shell find src -name '*.c')
 OBJ 		= ${patsubst src/%.c, objs/%.o, $(SRC)}
