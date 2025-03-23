@@ -5,12 +5,12 @@ As beautiful as a shell!
 
 ### install:
   ```Bash
-git clone git@github.com:dwbessa/42cursus_minishell.git && cd 42cursus_minishell
+git clone git@github.com:dwbessa/42cursus_minishell.git && cd tinyshell
   ```
 
 ### Usage:
 ```Bash
-make && ./minishell
+make && ./tinyshell
   ```
 
  ### We had to incorporate the following features:
