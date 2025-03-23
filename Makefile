@@ -7,14 +7,14 @@ CFLAGS		= -Wall -Werror -Wextra -g
 READLINE_FLAGS	= -lreadline
 INCLUDE		= -I includes/
 RM = rm -rf
-SILENT		= @
+SILENT		=
 COLOR_RESET	= \033[0m
 COLOR_GREEN	= \033[32m
 COLOR_YELLOW	= \033[33m
 COLOR_RED	= \033[31m
 BLINK		= \033[5m
 
-all:	$(NAME) 
+all:	$(NAME)
 
 $(LIBFT):
 		@$(MAKE) -s -C libft/
@@ -34,7 +34,7 @@ $(NAME): $(SILENT) $(LIBFT) $(OBJ)
 leak:
 		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supressions.supp -s ./minishell
 
-clean: 
+clean:
 		$(SILENT) @make clean -C libft
 		$(SILENT) ${RM} ${OBJ}
 		@rm -rf objs
